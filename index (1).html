@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bensir班 · 同事參觀 Demo｜校園智能班主任系統</title>
+<style>/* Bensir班 V6.1｜青春校園插畫風 · 保留既有功能 class 與 HTML IDs */
+:root{
+  --bg:#F5F8F5;--paper:#FFFFFF;--ink:#253C40;--muted:#72868A;--border:#E3ECE9;
+  --green:#368A80;--light:#EBF7F1;--amber:#A97A38;--warning:#FFF4D8;--red:#B75C60;
+  --mint:#D8F1E7;--peach:#FFE5D9;--cream:#FFF4CE;--lav:#EDE7FF;--aqua:#E7F3FF;
+  --shadow:0 14px 40px rgba(51,99,90,.065);--font:system-ui,-apple-system,"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14px;line-height:1.58}
+button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}.hidden{display:none!important}
+a{color:var(--green)}:focus-visible{outline:3px solid #F4B974;outline-offset:3px}
+/* Login: two-column campus illustrated layout */
+.auth-shell{min-height:100vh;display:grid;place-items:center;padding:35px 22px;background:radial-gradient(circle at 85% 15%,#FFF1CB 0,transparent 26%),radial-gradient(circle at 5% 82%,#D4EEE4 0,transparent 38%),#F9FAF5}
+.login-layout{display:grid;grid-template-columns:minmax(300px,1fr) minmax(310px,440px);gap:26px;width:min(1020px,100%);align-items:stretch}
+.login-story{position:relative;min-height:565px;padding:24px 28px 32px;border-radius:34px;background:linear-gradient(146deg,#E4F4ED,#DDF2E8 65%,#FFF0CF);border:1px solid rgba(255,255,255,.8);overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow)}
+.login-story:before{content:"";position:absolute;width:270px;height:270px;border-radius:50%;top:-190px;right:-100px;background:#FFF6DC80;pointer-events:none}
+.story-top{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}.story-chip{font-size:11px;font-weight:850;letter-spacing:1.6px;color:#397F71}.story-sun{font-size:33px;color:#C69A4E}
+.story-illustration{position:relative;z-index:1;max-width:520px;margin:0 auto; width:100%}.story-illustration svg{width:100%;height:auto;filter:drop-shadow(0 13px 12px #658e7b13)}
+.story-heading{font-size:27px;line-height:1.4;font-weight:850;color:#2E655E}.story-heading span{color:#E9A28C}.story-bottom{position:relative;z-index:2}.story-bottom p{color:#54766D;font-size:14px;line-height:1.85}.story-bubbles{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.story-bubbles span{background:#FFFFFFB8;border:1px solid #FFFFFF;border-radius:999px;padding:6px 11px;color:#54857A;font-size:12px;font-weight:700}
+.login-card{width:100%;padding:46px 36px;background:white;border-radius:34px;border:1px solid #E9EEEA;box-shadow:var(--shadow);align-self:center}.login-card h1{font-size:29px;line-height:1.35;letter-spacing:-.5px;margin:16px 0 8px}.login-card h2{font-size:24px;margin:16px 0}.login-card p{margin:0 0 26px;line-height:1.85}.change-card{width:min(440px,100%)}
+.logo{width:64px;height:64px;display:grid;place-items:center;background:#459D8A;border-radius:22px 22px 22px 9px;color:white;font-family:Georgia,serif;font-size:40px;font-weight:800;position:relative;box-shadow:0 9px 19px #55A88E24}.logo-leaf{position:absolute;font-family:var(--font);font-size:14px;color:#FFE4AD;right:-7px;top:-8px}.logo.small{width:43px;height:43px;font-size:29px;border-radius:14px 14px 14px 6px;box-shadow:none}
+.eyebrow{font-size:10px;color:#719E93;letter-spacing:2px;font-weight:850}.muted{color:var(--muted)}.helper{font-size:12px;color:var(--muted);margin-top:28px;line-height:1.95;border-top:1px dashed #E2EBE6;padding-top:19px}
+.stack{display:grid;gap:16px}label{display:grid;gap:7px;color:#4D6871;font-size:13px;font-weight:700}
+input,select,textarea{width:100%;padding:12px 14px;border:1px solid #DDE7E3;border-radius:14px;background:#FFFFFF;color:#2B4750;outline-offset:3px;box-shadow:0 2px 4px #00000003}
+input:focus,select:focus,textarea:focus{border-color:#64AF9E;outline:3px solid #D7EFE8}input[type="checkbox"]{accent-color:var(--green)}textarea{resize:vertical;min-height:75px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid #DAE9E3;background:#fff;color:#39766B;border-radius:13px;padding:10px 16px;gap:7px;font-weight:760;text-decoration:none;min-height:41px;transition:transform .18s,box-shadow .18s,background .18s}
+.btn.primary{background:#3A9383;border-color:#3A9383;color:white;box-shadow:0 7px 15px #3A93832B}.btn.light{background:#F6FAF7}.btn.cream{background:#FFF9EA;border-color:#F4DFB2;color:#9D713F}.btn.danger{color:#A85B60;border-color:#F0D9DB;background:#FFF6F5}.btn.tiny{padding:6px 10px;font-size:12px;min-height:30px;border-radius:9px}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 14px #2E7D7020}.btn:active:not(:disabled){transform:translateY(1px)}.linkbtn{border:0;background:none;padding:10px;color:#368777}
+/* Dashboard shell */
+.shell{display:flex;min-height:100vh}.sidebar{width:258px;flex:0 0 258px;background:#FFFFFF;border-right:1px solid #E9EFEA;display:flex;flex-direction:column;position:sticky;top:0;align-self:flex-start;height:100vh;padding:23px 14px 18px}
+.brand{display:flex;align-items:center;gap:11px;padding:4px 11px 20px;border-bottom:1px solid #EBF1EC}.brand b{font-size:18px;letter-spacing:-.3px}.brand small{display:block;font-size:11px;color:var(--muted);margin-top:2px}.brand-star{color:#DFAA5F}
+.role{font-size:12px;color:#739088;margin:17px 10px 15px}.nav{display:grid;gap:5px;overflow-y:auto;scrollbar-width:thin;padding-right:2px}
+.nav button{display:flex;align-items:center;gap:12px;text-align:left;padding:11px 12px;border:0;border-radius:13px;background:transparent;color:#59716F;font-weight:730;transition:background .15s,color .15s;min-height:43px}
+.nav button:hover{background:#F1F8F4}.nav button.active{background:#DDF0E8;color:#247C70}.nav-icon{font-size:19px;display:inline-grid;place-items:center;min-width:24px;font-weight:700;color:inherit;opacity:.95}
+.sidebar-foot{margin-top:auto;color:#97A89D;font-size:11px;padding:15px 11px 0;line-height:1.8;border-top:1px dashed #E6EEE8}.sidebar-doodle{font-size:23px;letter-spacing:5px;color:#D6AE83}
+.workspace{min-width:0;flex:1;display:flex;flex-direction:column;background:radial-gradient(circle at 98% 10%,#FFF6DE 0,transparent 270px),#F7F9F6}
+.top{background:#FFFFFFE8;border-bottom:1px solid #E9EFED;padding:25px max(26px,calc((100% - 1210px)/2));display:flex;justify-content:space-between;gap:20px;align-items:center;backdrop-filter:blur(8px)}
+.top h1{font-size:27px;letter-spacing:-.6px;margin:3px 0}.topRight{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.identity{background:#EBF6F0;border-radius:99px;padding:9px 12px;color:#3D8A78;font-size:12px;font-weight:700}
+.view{padding:27px 26px 45px;max-width:1260px;width:100%;margin:0 auto;flex:1}.footer{padding:17px;color:#95A79D;text-align:center;font-size:11px}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.cols.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:white;border:1px solid #E5ECE8;border-radius:23px;padding:22px;min-width:0;box-shadow:var(--shadow)}.card h2{font-size:17px;color:#2C5B56;letter-spacing:-.2px;margin:0 0 17px}.card h3{font-size:14px;margin:0 0 8px}.card p{margin:3px 0 11px}
+.kpi{background:#EAF5F1;border-radius:19px;padding:19px 20px;min-height:112px;position:relative;overflow:hidden}.kpi:after{content:"✿";font-size:70px;position:absolute;right:5px;bottom:-35px;color:#A8DACC66;pointer-events:none}.kpi strong{font-size:31px;display:block;color:#315F5B}.kpi span{font-size:12px;color:#678680}.home-kpis>.kpi:nth-child(2){background:#FFF1E4}.home-kpis>.kpi:nth-child(2):after{content:"✦";color:#F4C3A778}.home-kpis>.kpi:nth-child(3){background:#ECE9FC}.home-kpis>.kpi:nth-child(3):after{content:"♡";color:#CDC4EB77}
+/* Weekly hero with hand-drawn illustration */
+.welcome-banner{min-height:222px;border-radius:29px;position:relative;overflow:hidden;background:linear-gradient(115deg,#DFF3EA 0%,#F0F8E9 56%,#FFF4D6 100%);border:1px solid #E6EFE8;padding:26px 30px;display:flex;align-items:center;box-shadow:var(--shadow)}
+.welcome-banner:before{content:"";position:absolute;right:260px;top:-90px;width:230px;height:230px;border-radius:50%;background:#FFFFFF45}.welcome-content{position:relative;z-index:2;width:min(100%,65%)}.welcome-kicker{font-size:11px;font-weight:850;letter-spacing:1px;color:#6F9B88}
+.welcome-banner h2{font-size:clamp(21px,2.45vw,31px);line-height:1.35;letter-spacing:-.5px;margin:12px 0 8px;color:#2F675B}.welcome-banner p{font-size:14px;color:#618378;line-height:1.7;max-width:500px;margin:0 0 18px}.welcome-actions{display:flex;gap:8px;flex-wrap:wrap}.welcome-banner .btn{min-height:37px;font-size:12px}.hero-art{position:absolute;right:14px;bottom:0;width:min(36%,320px);height:auto;max-height:218px;filter:drop-shadow(0 9px 6px #35685512)}
+/* Quotes manager */
+.quote-editor{grid-template-columns:1.15fr .85fr}.quote-editor .card{align-self:start}.quote-editor .info{margin-bottom:20px}.quote-preview{background:linear-gradient(140deg,#FFF6D8,#FFE8DD);border:1px solid #FFE4C1;border-radius:19px;padding:24px;min-height:170px;position:relative;overflow:hidden}.quote-preview:before{content:"☀";position:absolute;right:18px;top:11px;font-size:48px;color:#F2CF94}.quote-preview .eyebrow{position:relative;z-index:1;color:#BE9363}.quote-preview h3{font-size:23px;color:#8E6750;margin:14px 0 7px;position:relative;z-index:1}.quote-preview p{color:#A17A63;position:relative;z-index:1;max-width:290px}.quote-preview-flower{color:#EAB6A8;font-size:27px;text-align:right}
+/* Components */
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.buttons{display:flex;flex-wrap:wrap;gap:9px;align-items:center}.space{height:18px}.space-sm{height:9px}.full{width:100%}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.split{display:grid;grid-template-columns:2fr 1fr;gap:17px}
+.roster{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.roster button{padding:11px 4px;background:#F2FAF5;border:1px solid #DCEDE4;border-radius:12px;color:#427E70;font-weight:800;transition:.15s}.roster button:hover{transform:translateY(-2px)}.roster button.female{background:#FFF0EF;border-color:#F6DADD;color:#B66D79}.roster button.selected{background:#438F7D;color:white;border-color:#438F7D;box-shadow:0 6px 12px #2C816C28}
+.section{margin-bottom:20px}.pill{border:1px solid #D6EAE0;border-radius:99px;padding:4px 10px;color:#547F72;font-size:11px;display:inline-block;background:#F5FBF7}
+.warn{background:#FFF6E1;border:1px solid #F4E4C2;padding:13px;border-radius:13px;color:#996F34}.error{background:#FFF0EF;border:1px solid #F2D7D6;color:#AE555D;padding:12px;border-radius:12px}.info{background:#EEF8F2;border:1px solid #D5EBDD;padding:13px;border-radius:13px;color:#426D5D}
+.tablewrap{overflow-x:auto;border:1px solid #EDF0ED;border-radius:13px}table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:11px 12px;text-align:left;border-bottom:1px solid #EDF1ED;vertical-align:top}tr:last-child td{border-bottom:0}tr:hover td{background:#FBFDFB}th{background:#F5F9F6;color:#69857C;font-weight:800;white-space:nowrap}td{overflow-wrap:anywhere}
+.small{font-size:12px}.right{text-align:right}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.section-title h2{margin:0}.badge{border-radius:9px;background:#DDF1E7;color:#317B6D;padding:3px 8px;font-size:11px;font-weight:750}.badge.paused{background:#FFF0E1;color:#A97043}.toast{position:fixed;bottom:22px;right:20px;background:#2E5750;color:white;padding:13px 18px;max-width:400px;border-radius:15px;box-shadow:0 9px 28px #17362F40;z-index:100}.plainlist{padding:0;margin:0;list-style:none}.plainlist li{padding:11px 0;border-bottom:1px dashed #E5EEE8}.miniCards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:11px}.mini{background:#F6FAF8;padding:13px;border:1px solid #E6F0E9;border-radius:13px}.modal{max-width:600px;width:calc(100vw - 30px);border:1px solid #D9E9DE;border-radius:19px;padding:25px;box-shadow:0 30px 90px #0004}.modal::backdrop{background:#1A352FA8}.button-group{display:flex;gap:10px;flex-wrap:wrap}.tag{font-size:12px;color:#768F87}.empty{padding:26px;color:#91A399;text-align:center}.loading{opacity:.65;pointer-events:none}.weeklist{max-height:470px;overflow:auto}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}hr{border:none;border-top:1px dashed #E5EEE8;margin:17px 0}details summary{cursor:pointer;font-weight:700;color:#427D70}.statbar{height:9px;border-radius:50px;background:#EDF1E7;overflow:hidden}.statbar i{display:block;background:#7DC5AB;height:100%}
+@media(max-width:1120px){.sidebar{width:230px;flex-basis:230px}.top{padding:22px}.hero-art{width:32%}.welcome-content{width:70%}}
+@media(max-width:900px){.login-layout{grid-template-columns:1fr;max-width:580px}.login-story{min-height:300px}.story-illustration{max-width:290px}.story-heading{font-size:21px}.login-card{padding:33px}.sidebar{width:200px;flex-basis:200px}.view{padding:20px}.cols,.split,.quote-editor{grid-template-columns:1fr}.top{padding:19px}}
+@media(max-width:620px){.auth-shell{padding:14px}.login-layout{gap:12px}.login-story{min-height:220px;padding:16px 18px 20px;border-radius:23px}.story-illustration{max-width:210px}.story-heading{font-size:18px}.story-bottom p{font-size:12px}.story-bubbles{margin-top:8px;gap:4px}.story-bubbles span{font-size:10px;padding:3px 8px}.login-card{padding:27px 22px;border-radius:23px}.login-card h1{font-size:24px}.shell{display:block}.sidebar{width:100%;height:auto;position:static;padding:10px 11px;flex-basis:auto}.brand{padding:0 3px 9px}.role,.sidebar-foot{display:none}.nav{display:flex;overflow-x:auto;padding:10px 1px 2px;gap:5px}.nav button{white-space:nowrap;padding:9px 11px;font-size:12px;min-height:37px;gap:6px}.nav-icon{min-width:17px;font-size:14px}.top{padding:16px;align-items:flex-start;flex-wrap:wrap}.top h1{font-size:22px}.topRight{width:100%;gap:6px}.identity{margin-right:auto}.view{padding:13px}.card{padding:16px;border-radius:18px}.cols.three,.grid3,.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}.roster{grid-template-columns:repeat(5,minmax(0,1fr))}th,td{padding:8px 7px;font-size:12px}.welcome-banner{padding:20px;min-height:210px;border-radius:21px}.welcome-content{width:100%}.welcome-banner h2{font-size:21px;max-width:260px}.welcome-banner p{font-size:12px;max-width:270px}.hero-art{width:44%;right:-25px;opacity:.40}.welcome-actions{position:relative;z-index:1}.welcome-actions .btn{font-size:11px;padding:8px}.kpi{min-height:91px;padding:13px}.kpi strong{font-size:25px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Bensir V6.2 — 神秘禮物盒抽獎動畫（僅更改呈現，機率與後端不變） */
+.gift-dialog{border:0;background:transparent;color:#32574f;max-width:min(530px,calc(100vw - 26px));width:100%;max-height:calc(100dvh - 28px);padding:0;border-radius:28px;overflow-y:auto;box-shadow:0 35px 100px #194e4e4d}
+.gift-dialog::backdrop{background:rgba(21,54,54,.68);backdrop-filter:blur(5px)}
+.gift-stage{position:relative;overflow:hidden;padding:34px 32px 24px;display:flex;align-items:center;flex-direction:column;text-align:center;background:radial-gradient(ellipse at 50% 30%,#ffffff 0%,#fff8eb 55%,#faefe8 100%);min-height:525px}
+.gift-stage:before{content:'';position:absolute;top:-85px;right:-90px;width:230px;height:230px;border-radius:50%;background:#e8f5f0;opacity:.7;pointer-events:none}
+.gift-kicker{letter-spacing:2px;font-size:11px;font-weight:800;color:#b88d67;position:relative;margin-bottom:12px}
+.gift-stage h2{font-size:clamp(22px,3.1vw,29px);line-height:1.4;letter-spacing:.2px;color:#315e57;margin:0 24px 9px;position:relative}
+.gift-subtitle{font-size:13px;line-height:1.8;color:#826f62;max-width:380px;margin:0;min-height:42px;position:relative}
+.gift-dismiss{position:absolute;top:13px;right:15px;z-index:5;font-size:25px;background:#fff9;border:1px solid #ebded4;border-radius:50%;width:36px;height:36px;cursor:pointer;color:#7c7b79}
+.gift-dismiss:disabled{opacity:.4;cursor:not-allowed}
+.gift-art-wrap{position:relative;width:260px;height:230px;display:grid;place-items:center;margin:6px 0 0;flex-shrink:0}
+.gift-art{position:relative;width:220px;height:208px;filter:drop-shadow(0 12px 9px #be968b45)}
+.gift-art:before{content:'';position:absolute;bottom:8px;left:17px;width:190px;height:18px;border-radius:50%;background:#d5b8a280}
+.gift-box{position:absolute;left:40px;bottom:14px;width:140px;height:104px;border-radius:10px 10px 14px 14px;background:linear-gradient(90deg,#e9a29b,#f2b5a5);border:2px solid #df968d;box-shadow:inset -10px 0 0 #f6c5b7;overflow:hidden}
+.gift-ribbon{position:absolute;left:58px;top:0;height:105px;width:25px;background:#ffe6a3;border-left:2px solid #e9c681;border-right:2px solid #e9c681}
+.gift-lid{position:absolute;left:28px;bottom:116px;width:164px;height:36px;border:2px solid #e9a294;border-radius:9px;background:linear-gradient(#fad1bf,#f5b5a3);z-index:2;transform-origin:19% 82%;transition:transform .9s cubic-bezier(.17,.87,.42,1.08),opacity .7s}
+.gift-lid-ribbon{position:absolute;left:69px;width:26px;height:100%;top:0;background:#ffe6a3;border-left:2px solid #e9c681;border-right:2px solid #e9c681}
+.gift-bow{position:absolute;top:-39px;width:54px;height:38px;border:8px solid #f4d784;border-radius:70% 40% 65% 30%;box-shadow:0 2px 0 #d7ad6e;transform-origin:100% 100%}
+.bow-left{left:30px;transform:rotate(30deg)}.bow-right{left:85px;transform:scaleX(-1) rotate(30deg)}
+.gift-bow-center{position:absolute;left:72px;top:-10px;width:20px;height:19px;background:#e9c77a;border-radius:50%}
+.gift-glow{position:absolute;bottom:0;width:100%;height:100%;background:radial-gradient(circle at 50% 20%,#fffad8 0%,transparent 70%);opacity:0;transition:opacity .4s}
+.gift-rays{position:absolute;left:110px;top:100px;opacity:0;transition:opacity .25s;z-index:0}.gift-rays i{position:absolute;width:7px;height:77px;background:linear-gradient(#fff2ba,transparent);border-radius:9px;transform-origin:50% 105px}.gift-rays i:nth-child(1){transform:rotate(0deg)}.gift-rays i:nth-child(2){transform:rotate(72deg)}.gift-rays i:nth-child(3){transform:rotate(144deg)}.gift-rays i:nth-child(4){transform:rotate(216deg)}.gift-rays i:nth-child(5){transform:rotate(288deg)}
+.gift-sparkles{position:absolute;inset:0;pointer-events:none}.gift-confetti{position:absolute;left:107px;top:91px;width:10px;height:16px;border-radius:3px;opacity:0;background:#f4c876;transform:translate(0,0) rotate(0)}
+.gift-confetti:nth-child(3n){background:#91ceba}.gift-confetti:nth-child(3n+1){background:#e9a19b}.gift-confetti:nth-child(4n){border-radius:50%}
+.gift-opening .gift-art{animation:gift-vibrate .22s ease-in-out infinite alternate}
+.gift-opening .gift-art-wrap:after{content:'✦   ✧   ✦';position:absolute;top:23px;color:#dda15e;font-size:21px;letter-spacing:25px;animation:gift-glint .7s ease-in-out infinite alternate}
+.gift-revealing .gift-art{animation:none}.gift-revealing .gift-lid{transform:translate(82px,-38px) rotate(25deg)}.gift-revealing .gift-rays{opacity:.9}.gift-revealing .gift-glow{opacity:1}
+.gift-revealing .gift-confetti{animation:gift-pop 1.1s ease-out var(--delay) both}
+.gift-grand .gift-rays i{background:linear-gradient(#ffd475,transparent)}.gift-encourage .gift-rays i{background:linear-gradient(#bcdfbd,transparent)}
+.gift-status{font-size:12px;color:#99806a;min-height:25px;margin:0 0 12px;z-index:1;position:relative}
+.gift-result{display:grid;gap:6px;background:#fffdf5;border:1px solid #fae2b4;border-radius:14px;padding:12px 23px;margin:0 0 14px;position:relative;z-index:1;box-shadow:0 8px 25px #ddad7d24;animation:gift-appear .35s ease-out}
+.gift-result strong{font-size:19px;color:#a16944}.gift-result span{font-size:12px;color:#aa8a62}.gift-result-label{letter-spacing:1.5px;font-size:10px!important}
+.gift-controls{width:100%;max-width:320px;position:relative;z-index:1}.gift-controls .btn{width:100%;justify-content:center;min-height:47px;font-size:15px}.gift-footnote{margin:16px 10px 0;font-size:10px;color:#9f978e;line-height:1.5;position:relative;z-index:1}
+.gift-failed .gift-art{animation:none;opacity:.5}.gift-failed .gift-status{color:#9c5754}
+@keyframes gift-vibrate{0%{transform:translate(-2px,0) rotate(-2deg)}100%{transform:translate(2px,-4px) rotate(2deg)}}
+@keyframes gift-glint{0%{opacity:.25;transform:scale(.93)}100%{opacity:1;transform:scale(1.1)}}
+@keyframes gift-pop{0%{opacity:0;transform:translate(0,0) scale(.2) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.8) rotate(280deg)}}
+@keyframes gift-appear{from{opacity:0;transform:translateY(13px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:520px){.gift-stage{padding:30px 18px 22px;min-height:500px}.gift-art-wrap{transform:scale(.93);margin:-2px 0}.gift-dialog{max-height:calc(100dvh - 18px)}}
+@media(prefers-reduced-motion:reduce){.gift-opening .gift-art,.gift-opening .gift-art-wrap:after,.gift-revealing .gift-confetti,.gift-result{animation:none!important}.gift-revealing .gift-lid{transition:none!important}}
+
+
+/* Bensir班 V6.3 · 紀律統計中心 */
+.report-filter-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.report-filter-top h2{font-size:22px;line-height:1.4;margin:3px 0 7px}
+.report-periods{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.report-controls{display:flex;gap:12px;align-items:end;flex-wrap:wrap;margin:19px 0 14px}
+.report-controls label{display:grid;gap:7px;min-width:138px;flex:1;font-size:12px;color:#64817a;font-weight:700}
+.report-controls input,.report-controls select{padding:10px 12px;max-width:100%;border-radius:12px}
+.report-filter-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.report-filter-bottom .button-group{gap:7px}
+.report-check{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:650;color:#446d65}
+.report-check input{width:auto;accent-color:#388d7d}
+.report-stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.report-kpi{min-height:109px;padding:20px;border-radius:18px;display:flex;flex-direction:column;gap:10px;background:#e8f5ef;color:#3f6b5e}
+.report-kpi strong{font-size:32px;line-height:1;color:#245b56;letter-spacing:-.8px}
+.report-kpi strong small{font-size:15px;font-weight:500}
+.report-kpi span{font-size:12px;font-weight:700}.report-kpi.peach{background:#fff0e7}.report-kpi.cream{background:#fff5da}.report-kpi.lilac{background:#f1edfc}
+.report-category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.report-cat{background:#e8f5ef;border:1px solid #d8eadd;border-radius:15px;padding:15px;display:flex;flex-direction:column;gap:4px}
+.report-cat.r1{background:#fef0e7;border-color:#ffe0cf}.report-cat.r2{background:#fff6e2;border-color:#f6e6b6}.report-cat.r3{background:#f2eefa;border-color:#e3ddf6}
+.report-cat span{color:#547c72;font-weight:750;font-size:13px}.report-cat strong{font-size:28px;color:#285e54;line-height:1.25}.report-cat small{color:#708780;font-size:11px}
+.report-num{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:650}
+.report-num i{font-size:11px;background:#d88377;color:#fff;margin-left:4px;border-radius:50%;padding:1px 5px;font-style:normal}
+.report-watch-row td{background:#fffbf3}.report-watch-row:hover td{background:#fff5e7}
+.report-alert-pill{display:inline-block;padding:5px 8px;border-radius:30px;background:#fff0dc;color:#97673a;border:1px solid #f4dec0;font-size:11px;font-weight:740;white-space:normal;min-width:72px}
+.report-normal-pill{color:#a5b1a9}
+.report-student-link{background:transparent;border:0;color:#288978;font-weight:850;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:4px 0;font-size:13px}
+.report-student-link:hover{color:#155e53}.report-home-item{display:flex;gap:10px;justify-content:space-between;align-items:center;border-bottom:1px solid #ecf2eb;padding:8px 0}
+.report-home-bottom{margin-top:15px}.report-settings{background:#f9fbf7;border:1px solid #e6eee8;border-radius:15px;padding:15px}
+.report-settings>summary{color:#3b7469;font-weight:760;cursor:pointer}.report-settings-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:15px}
+.report-settings-grid label{display:grid;gap:6px;color:#4d756b;font-size:12px;font-weight:750}.report-settings-grid input{width:100%;padding:10px;border-radius:10px}
+.report-settings-foot{grid-column:1/-1;display:flex;align-items:center;gap:16px;justify-content:space-between;flex-wrap:wrap}.report-settings-foot span{font-size:12px;color:#728b80;max-width:440px}
+.report-bars{display:grid;gap:12px}.report-bar-line{display:grid;grid-template-columns:84px 1fr 25px;align-items:center;gap:9px;font-size:12px;color:#6b8579}
+.report-bar-track{height:11px;background:#ecf3ee;border-radius:40px;overflow:hidden}.report-bar-track i{display:block;height:100%;background:#84c6ae;border-radius:30px}
+.report-small-stat{background:#f1f8f3;border-radius:15px;padding:17px;display:flex;flex-direction:column;gap:5px}
+.report-small-stat span{font-size:12px;color:#557d73}.report-small-stat strong{font-size:29px;color:#2e7162}.report-small-stat small{font-size:11px;color:#7a958a}
+.report-penalty-strip{display:flex;gap:10px;flex-wrap:wrap}.report-penalty-strip span{background:#fdf1e9;border-radius:11px;padding:11px 17px;color:#9b6d52}.report-penalty-strip b{font-size:20px;margin-left:9px}
+.report-secondary{display:block;font-size:11px;color:#8b9992;margin-top:4px}.report-void{opacity:.55}
+@media(max-width:920px){.report-stat-grid,.report-category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.report-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.report-controls>*{flex:1 1 145px}.report-filter-bottom{align-items:stretch}.report-filter-bottom .button-group{width:100%}.report-stat-grid{gap:8px}.report-kpi{padding:13px;min-height:90px}.report-kpi strong{font-size:27px}.report-category-grid{gap:8px}.report-cat{padding:12px}.report-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.report-periods .btn{padding:6px 10px;font-size:12px}}
+
+/* V6.4 每日請假整合表單 */
+.leave-fields{background:#f1faf5;border:1px solid #d6ece2;border-radius:17px;padding:15px;display:grid;gap:12px}
+.leave-fields .info{margin:0}
+.leave-fields.hidden{display:none!important}
+.leave-fields label{display:grid;gap:6px}
+#normalEventFields,#editNormalFields{display:grid;gap:12px}
+#normalConfirmed{margin:4px 0}
+
+/* colleagues-only sandbox demo controls */
+.demo-welcome-panel{display:grid;gap:13px;margin-top:18px;}
+.demo-welcome-panel p{color:#637D7A;line-height:1.85;font-size:14px;margin:0 0 2px}
+.demo-feature-pill{width:max-content;max-width:100%;background:#E2F5ED;color:#267C70;padding:7px 12px;border-radius:999px;font-size:12px;font-weight:750;}
+.demo-entry-button{width:100%;min-height:55px;justify-content:center;font-weight:750;font-size:15px;}
+.demo-notice{background:#FFF5D9;border:1px solid #F7E6BB;border-radius:13px;padding:11px 13px;color:#87693E;font-size:12px;line-height:1.8;}
+.demo-floating{position:fixed;right:12px;bottom:12px;z-index:9998;display:none;align-items:center;gap:6px;max-width:calc(100vw - 24px);flex-wrap:wrap;background:#234C47;color:white;padding:8px 10px;border-radius:15px;box-shadow:0 12px 28px #193C3C45;font-size:12px;}
+.demo-floating span{font-weight:700;margin-right:5px;}
+.demo-floating button{border:1px solid #B6D2CA;background:#F2FBF7;color:#275850;cursor:pointer;border-radius:8px;padding:5px 9px;font-size:12px;}
+.demo-floating button:hover{background:#D9F1E7;}
+body:has(#mainShell:not(.hidden)) .demo-floating{display:flex;}
+@media(max-width:580px){.demo-floating{left:8px;right:8px;justify-content:center;bottom:5px;font-size:11px;}.demo-floating span{width:100%;text-align:center}.shell{padding-bottom:80px!important}}
+</style></head>
+<body>
+<div id="app">
+ <main class="auth-shell" id="authShell">
+  <div class="login-layout">
+   <section class="login-story" aria-label="Bensir班校園生活">
+    <div class="story-top"><span class="story-chip">✦ BENSIR CLASS · 2026—2027</span><span class="story-sun">☀</span></div>
+    <div class="story-illustration" aria-hidden="true">
+      <svg viewBox="0 0 520 350" role="img" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFF9ED"/><stop offset="1" stop-color="#D6EEE9"/></linearGradient></defs>
+        <rect x="14" y="12" width="492" height="320" rx="34" fill="url(#sky)"/>
+        <circle cx="413" cy="70" r="32" fill="#FFDA82"/><g stroke="#F4B95F" stroke-width="4" stroke-linecap="round"><path d="M413 17v-13M413 136v-13M360 70h-14M480 70h-13M376 33l-9-9M456 110l9 9M456 31l9-9M376 109l-9 9"/></g>
+        <path d="M45 276c88-49 185-60 265-34s132 38 171 10v80H45Z" fill="#B8DFD1"/>
+        <path d="M75 273c60-35 129-38 189-15 38 15 73 19 108 17" stroke="#80BBA9" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <rect x="136" y="87" width="220" height="186" rx="16" fill="#F9E2B4" stroke="#A9A0A1" stroke-width="4"/>
+        <rect x="153" y="103" width="184" height="144" rx="7" fill="#FFFBF4"/>
+        <rect x="173" y="120" width="147" height="15" rx="7" fill="#C7E6DF"/>
+        <rect x="174" y="149" width="89" height="7" rx="3" fill="#E9D8C5"/>
+        <rect x="174" y="169" width="125" height="7" rx="3" fill="#E9D8C5"/>
+        <rect x="174" y="189" width="106" height="7" rx="3" fill="#E9D8C5"/>
+        <path d="M214 213q23-25 46 0t45-2" fill="none" stroke="#89BFAF" stroke-width="5" stroke-linecap="round"/>
+        <path d="M117 238l17-80 13 4-18 82Z" fill="#E69B83" stroke="#AF7069" stroke-width="3"/><path d="M134 158l-17-17-1 22Z" fill="#FCE7AE" stroke="#AF7069" stroke-width="3"/>
+        <circle cx="408" cy="240" r="20" fill="#F5B8AC"/><rect x="388" y="252" width="42" height="30" rx="13" fill="#E89B91"/><circle cx="400" cy="237" r="2.6" fill="#684E4B"/><circle cx="415" cy="237" r="2.6" fill="#684E4B"/><path d="M402 247q6 6 12-1" fill="none" stroke="#684E4B" stroke-width="2" stroke-linecap="round"/>
+        <path d="M395 217l-7-11M418 216l9-10" stroke="#E89B91" stroke-width="7" stroke-linecap="round"/>
+        <g fill="#FFFFFF" opacity=".9"><circle cx="75" cy="84" r="7"/><circle cx="91" cy="84" r="9"/><circle cx="85" cy="75" r="9"/><circle cx="452" cy="168" r="7"/><circle cx="470" cy="168" r="10"/><circle cx="461" cy="159" r="11"/></g>
+        <g fill="#F8D39C"><path d="M66 214l8-18 8 18 18 8-18 6-8 20-8-20-18-6Z"/><path d="M377 133l5-10 5 10 10 5-10 4-5 12-5-12-10-4Z"/></g>
+      </svg>
+    </div>
+    <div class="story-bottom"><div class="story-heading">在這裏，記錄每一天的成長<span> ✿</span></div><p>每天的小進步，都值得被看見。<br>一起把班級生活變得更有溫度。</p><div class="story-bubbles"><span>☁ 我的學習日誌</span><span>✉ 悄悄話</span><span>🎁 幸運抽獎</span></div></div>
+   </section>
+   <section class="login-card">
+    <div class="logo">B<span class="logo-leaf">✿</span></div>
+    <div class="eyebrow">BENSIR · COLLEAGUE SHOWCASE</div>
+    <h1>歡迎參觀 Bensir班！</h1>
+    <p class="muted">這是一個給同事參觀的獨立示範網站，所有學生及紀錄均為虛構。</p>
+         <div class="demo-welcome-panel">
+      <div class="demo-feature-pill">✦ 只供示範 · 不需帳號密碼</div>
+      <p>你可以自由切換教師與學生畫面，體驗每日紀錄、班級統計、請假管理、每週鼓勵語，以及禮物盒抽獎。</p>
+      <button class="btn primary demo-entry-button" type="button" id="demoTeacherLogin">👩‍🏫 參觀教師後台 →</button>
+      <button class="btn demo-entry-button" type="button" id="demoStudentLogin">🎒 參觀學生專區（09號） →</button>
+      <div class="demo-notice">本網站不連接 Google Sheets，也不提供真正的帳戶登入；所有資料及抽獎結果僅供展示，重新整理便會重置。</div>
+     </div>
+     <form id="loginForm" class="stack hidden" aria-hidden="true"><input id="loginUser" value="teacher"><input id="loginPass" type="password" value="demo"><button type="submit">進入</button></form>
+   </section>
+  </div>
+ </main>
+ <section id="changeShell" class="auth-shell hidden"><div class="login-card change-card"><div class="logo">B</div><h2>首次登入 · 修改密碼</h2><p class="muted">為保護個人紀錄，請設定6至10字元的新密碼；正式使用建議使用10字元且避免容易猜中的組合。</p><form id="changeForm" class="stack"><label>初始／舊密碼<input type="password" id="oldPass" autocomplete="current-password" required></label><label>新密碼（6至10字元）<input type="password" id="newPass" autocomplete="new-password" minlength="6" maxlength="10" required></label><button class="btn primary">儲存新密碼並重新登入</button></form><button class="linkbtn" id="changeExit">返回登入</button></div></section>
+ <div id="mainShell" class="shell hidden">
+   <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="logo small">B</div><div><b>Bensir班 <span class="brand-star">✦</span></b><small>青春校園生活 · 2026—2027</small></div></div>
+    <div id="roleInfo" class="role"></div>
+    <nav id="nav" class="nav" aria-label="主要功能"></nav>
+    <div class="sidebar-foot"><span class="sidebar-doodle">✎ ✿ ♡</span><br>這裏記下每一份努力<br>紙本教室日誌仍須保留</div>
+   </aside>
+   <div class="workspace"><header class="top">
+      <div class="top-heading"><div class="eyebrow">✷ BENSIR · HAPPY SCHOOL DAYS</div><h1 id="screenTitle">工作台</h1><div class="muted" id="screenSub">2026—2027學年</div></div>
+      <div class="topRight"><span id="who" class="identity"></span><button class="btn light" id="refresh">↻ 更新資料</button><button class="btn light" id="logout">登出</button></div>
+    </header>
+    <div id="view" class="view"></div><div class="footer">Bensir班 · 每一步成長都值得被記錄 ✿ · 澳門時間</div>
+   </div>
+ </div>
+</div>
+<div class="demo-floating" id="demoFloating" aria-label="同事參觀模式">
+  <span>🧪 同事參觀 Demo · 虛構資料</span>
+  <button id="demoSwapTeacher" type="button">教師端</button>
+  <button id="demoSwapStudent" type="button">學生端</button>
+  <button id="demoReturn" type="button">回入口</button>
+ </div>
+ <div id="toast" class="toast hidden" role="alert" aria-live="polite"></div>
+<script>/* 離線介面預覽：虛構資料，無真實 GAS 連線或儲存。 */
+const DEMO_STORE={events:[{id:'sample-pending',date:'2026-10-13',studentId:'02',type:'缺席待確認',subject:'',period:'',status:'待核實',confirmed:false,paper:true,note:'家長通知後再確認',penaltyRounds:0}],leaves:[],thresholds:{late:3,card:3,homework:3,classroom:2}};
+
+/* 完全虛構的展示數據：不包含任何真實學生姓名或紀律資料。 */
+(function seedShowcase(){
+ const rows=[
+  ['2026-10-01','01','遲到',true],['2026-10-07','01','遲到',true],['2026-10-12','01','遲到',true],
+  ['2026-10-03','01','欠交功課',true],['2026-10-08','01','欠交功課',true],['2026-10-13','01','欠交功課',true],
+  ['2026-10-02','03','欠拍卡',true],['2026-10-08','03','欠拍卡',true],['2026-10-12','03','欠拍卡',true],
+  ['2026-10-09','03','上課違規記名',true],['2026-10-13','03','上課違規記名',true],
+  ['2026-10-04','08','欠交功課',true],['2026-10-10','08','欠交功課',true],['2026-10-12','08','欠交功課',true],
+  ['2026-10-02','09','遲到',true],['2026-10-07','09','欠交功課',true],
+  ['2026-10-09','12','欠交功課',true],['2026-10-12','12','上課違規記名',false],
+  ['2026-10-13','06','缺點',true],['2026-10-12','15','小過',true],
+  ['2026-09-10','24','遲到',true],['2026-09-15','17','欠拍卡',true],
+  ['2026-10-13','23','遲到',false],['2026-10-14','21','欠交功課',false]
+ ];
+ rows.forEach((r,i)=>DEMO_STORE.events.push({id:'fiction-'+i,date:r[0],studentId:r[1],type:r[2],subject:r[2]==='欠交功課'?'數學':'',period:r[2]==='欠交功課'?'第3節':'',status:r[3]?'已核實':'待核實',confirmed:r[3],paper:true,note:'虛構示例',penaltyRounds:['缺點','小過','大過'].includes(r[2])?2:0}));
+ const l=[{id:'fiction-leave-1',studentId:'09',start:'2026-10-13',end:'2026-10-13',kind:'病假',period:'全日',proofType:'醫生證明',proofStatus:'待提交',approval:'已批准',due:'2026-10-20',note:'虛構示例'},{id:'fiction-leave-2',studentId:'04',start:'2026-10-12',end:'2026-10-12',kind:'事假',period:'上午',proofType:'家長信',proofStatus:'已提交',approval:'已批准',due:'',note:'虛構示例'}];
+ l.forEach(v=>{DEMO_STORE.leaves.push(v);DEMO_STORE.events.push({id:v.id,date:v.start,studentId:v.studentId,type:v.kind,subject:'',period:v.period,status:'已核實',confirmed:false,paper:true,note:'虛構示例',penaltyRounds:0});});
+})();
+DEMO_STORE.points=52; DEMO_STORE.tickets=1; DEMO_STORE.draws=[];
+DEMO_STORE.messages=[{id:'f-message-1',studentId:'09',category:'班級建議',text:'希望班會可以安排更多小組活動。（虛構示例）',reply:'謝謝建議，我會考慮。',status:'已回覆',createdAt:'2026-10-12'},{id:'f-message-2',studentId:'01',category:'功課問題',text:'想了解補交功課的安排。（虛構示例）',reply:'',status:'未讀',createdAt:'2026-10-13'}];
+DEMO_STORE.appeals=[{id:'f-appeal-1',studentId:'08',eventId:'fiction-10',text:'想申請核對這項紀錄。（虛構示例）',reply:'',status:'待處理'}];
+DEMO_STORE.calendar=[{weekId:'2026-10-12',saturday:'2026-10-17',enabled:true,locked:true,reason:'正常開放'},{weekId:'2026-10-19',saturday:'2026-10-24',enabled:true,locked:false,reason:''},{weekId:'2026-12-14',saturday:'2026-12-19',enabled:true,locked:false,reason:''},{weekId:'2026-12-21',saturday:'2026-12-26',enabled:false,locked:false,reason:'聖誕假期'},{weekId:'2027-01-18',saturday:'2027-01-23',enabled:false,locked:false,reason:'長假期'}];
+DEMO_STORE.quotes=[{weekId:'2026-10-12',title:'今天也是進步的一天！',subtitle:'一小步也值得欣賞，慢慢來，你正在前進。',customized:false},{weekId:'2026-10-19',title:'每個人都有自己的節奏。',subtitle:'不用比較，只要繼續向前。',customized:false},{weekId:'2026-10-26',title:'每一次嘗試都值得鼓勵。',subtitle:'保持好奇，勇敢學習。',customized:false}];
+let demoUser={username:'teacher',role:'teacher',studentId:'',mustChange:false};
+const clone=x=>JSON.parse(JSON.stringify(x));
+function replyDemo(req){
+ const op=req.op||'',p=req.data||{},sid=demoUser.studentId;
+ if(op==='login'){demoUser={username:p.username,role:p.username==='teacher'?'teacher':'student',studentId:p.username==='teacher'?'':p.username,mustChange:false};return {token:'demo-token',account:demoUser};}
+ if(op==='whoami')return clone(demoUser);
+ if(op==='logout')return {ok:true};
+ if(op==='dashboard'){
+   const isTeacher=demoUser.role==='teacher';const events=DEMO_STORE.events.filter(x=>isTeacher||x.studentId===sid),leaves=DEMO_STORE.leaves.filter(x=>isTeacher||x.studentId===sid);
+   const base={role:demoUser.role,today:'2026-10-17',start:'2026-10-12',end:'2027-06-20',weeklyQuote:clone(DEMO_STORE.quotes[0]),events:clone(events),leaves:clone(leaves),draws:clone(DEMO_STORE.draws.filter(x=>isTeacher||x.studentId===sid)),messages:clone(DEMO_STORE.messages.filter(x=>isTeacher||x.studentId===sid)),appeals:clone(DEMO_STORE.appeals.filter(x=>isTeacher||x.studentId===sid)),calendar:clone(DEMO_STORE.calendar),points:DEMO_STORE.points,tickets:DEMO_STORE.tickets,reportThresholds:clone(DEMO_STORE.thresholds),inventory:[{month:'2026-10',prizeId:'MCD',cap:3,awarded:1,transferred:0},{month:'2026-10',prizeId:'GRACE',cap:4,awarded:2,transferred:0},{month:'2026-10',prizeId:'GIFT',cap:5,awarded:2,transferred:0}],specialInventory:[{originMonth:'2026-09',prizeId:'GIFT',qty:2,awarded:0}],specialMonths:[],students:Array.from({length:29},(_,i)=>({studentId:String(i+1).padStart(2,'0'),points:0,tickets:0,sex:[2,3,6,8,11,12,16,17,19,20,24,25,27].includes(i+1)?'女':'男'})),quoteSchedule:clone(DEMO_STORE.quotes)};
+   if(!isTeacher){base.weekly={weekId:'2026-10-12',saturday:'2026-10-17',active:true,eligibility:{eligible:true,reason:'示範模式：合資格'}};base.special={month:'2026-10',date:'2026-10-31',active:true,eligibility:{eligible:true,reason:'示範模式：特別抽獎預覽'}};base.prizes=[];base.pointsLedger=[];base.ticketLedger=[];base.ban={blocked:false};delete base.students;delete base.reportThresholds;delete base.quoteSchedule;}
+   return base;
+ }
+ if(op==='saveEvents'){
+   const ids=p.studentIds||[p.studentId];const created=[];
+   for(const id of ids){
+    const old=DEMO_STORE.events.find(x=>x.date===p.date&&x.studentId===id&&x.type==='缺席待確認');
+    if((p.type==='病假'||p.type==='事假')&&DEMO_STORE.leaves.some(x=>x.start===p.date&&x.studentId===id))throw Error('已有請假紀錄');
+    const key=old?.id||'demo-'+Math.random().toString(36).slice(2);
+    const evt={id:key,date:p.date,studentId:id,type:p.type,subject:p.subject||'',period:p.leavePeriod||p.period||'',status:(p.type==='病假'||p.type==='事假')?(p.approval==='已批准'?'已核實':'待核實'):(p.status||'待核實'),confirmed:p.type==='病假'||p.type==='事假'?false:!!p.confirmed,paper:!!p.paper,note:p.note||'',penaltyRounds:0};
+    if(old)Object.assign(old,evt);else DEMO_STORE.events.push(evt);created.push(evt);
+    if(p.type==='病假'||p.type==='事假')DEMO_STORE.leaves.push({id:key,studentId:id,start:p.date,end:p.date,kind:p.type,period:p.leavePeriod||'全日',proofType:p.type==='病假'?'醫生證明':'家長信',proofStatus:p.proofStatus||'待提交',approval:p.approval||'待審核',due:p.due||'',note:p.note||''});
+   }return created;
+ }
+ if(op==='saveLeave')return replyDemo({op:'saveEvents',data:{date:p.date,studentIds:[p.studentId],type:p.kind,leavePeriod:p.period,proofStatus:p.proofStatus,approval:p.approval,due:p.due,note:p.note}})[0];
+ if(op==='updateLeave'){const l=DEMO_STORE.leaves.find(x=>x.id===p.id);Object.assign(l,p);const e=DEMO_STORE.events.find(x=>x.id===p.id);if(e)e.status=p.approval==='已批准'?'已核實':'待核實';return {ok:true};}
+ if(op==='updateEvent'){
+  let e=DEMO_STORE.events.find(x=>x.id===p.id);if(!e)throw Error('找不到');Object.assign(e,p);
+  if(['病假','事假'].includes(p.type)){e.status=p.approval==='已批准'?'已核實':'待核實';e.confirmed=false;let l=DEMO_STORE.leaves.find(x=>x.id===e.id);let x={id:e.id,studentId:e.studentId,start:e.date,end:e.date,kind:e.type,period:p.leavePeriod||'全日',proofType:e.type==='病假'?'醫生證明':'家長信',proofStatus:p.proofStatus,approval:p.approval,due:p.due,note:p.note};if(l)Object.assign(l,x);else DEMO_STORE.leaves.push(x);}
+  return clone(e);
+ }
+ if(op==='draw'){
+  if(demoUser.role!=='student')throw Error('請先切換到學生專區');
+  const kind=p.kind==='special'?'special':'weekly',periodKey=kind==='weekly'?'2026-10-12':'2026-10';
+  const prev=DEMO_STORE.draws.filter(x=>x.studentId===sid&&x.kind===kind&&x.periodKey===periodKey);
+  if(prev.length>=2)throw Error('此示範活動最多抽2次');
+  if(!p.extra&&prev.length>0)throw Error('免費次數已使用');
+  if(p.extra&&prev.length!==1)throw Error('請先完成免費抽獎');
+  if(p.extra&&DEMO_STORE.tickets<1)throw Error('額外券不足');
+  if(p.extra)DEMO_STORE.tickets--;
+  const options=kind==='special'?['GIFT','NONE']:['P10','NONE','P5'];
+  const prizeId=options[(prev.length+DEMO_STORE.draws.length)%options.length];
+  const pointsAdded=prizeId.startsWith('P')?Number(prizeId.slice(1)):0;
+  DEMO_STORE.points+=pointsAdded;
+  const rec={id:'fiction-draw-'+DEMO_STORE.draws.length,studentId:sid,kind,periodKey,prizeId,at:'2026-10-17',pointsAdded};
+  DEMO_STORE.draws.push(rec);
+  return {...rec,label:({P10:'10積分',P5:'5積分',NONE:'下次加油',GIFT:'小禮物'})[prizeId],points:DEMO_STORE.points};
+ }
+ if(op==='redeem'){
+  if(DEMO_STORE.points<50)throw Error('積分不足50分');
+  DEMO_STORE.points-=50;DEMO_STORE.tickets++;return {points:DEMO_STORE.points,tickets:DEMO_STORE.tickets};
+ }
+ if(op==='saveMessage'){DEMO_STORE.messages.push({id:'fiction-message-'+Date.now(),studentId:sid,category:p.category,text:p.text,reply:'',status:'未讀',createdAt:'2026-10-17'});return {ok:true};}
+ if(op==='saveWeeklyQuote'){const q=DEMO_STORE.quotes.find(x=>x.weekId===p.weekId);if(q){q.title=p.reset?'今天也是進步的一天！':p.title;q.subtitle=p.reset?'一小步也值得欣賞，慢慢來，你正在前進。':p.subtitle;q.customized=!p.reset;}return {ok:true};}
+ if(op==='resetStudentPassword'||op==='backupDatabase')throw Error('同事參觀版不會產生真實密碼或建立備份');
+ if(op==='saveReportThresholds'){DEMO_STORE.thresholds=p;return {ok:true};}
+ return {ok:true};
+}
+/* 所有資料請求都在本頁的示範記憶體內執行，絕不呼叫 GAS 後端。 */
+window.DEMO_REQUEST=(req)=>new Promise((resolve,reject)=>{
+ queueMicrotask(()=>{try{resolve(replyDemo(req));}catch(error){reject(error);}});
+});
+
+(() => {
+'use strict';
+const $=id=>document.getElementById(id), H=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const studentNum=n=>String(n).padStart(2,'0'), girl=new Set([2,3,6,8,11,12,16,17,19,20,24,25,27]);
+const today='2026-10-17'; // 示範資料的日期；Fallback before server response; backend uses actual Macau date.
+let authToken=sessionStorage.getItem('bensir_token')||'',me=null,data=null,page='',selected=new Set(),regDate=today,reportFrom='2026-09-01',reportTo='2027-06-20',quoteWeekChoice='',reportSort='alerts',reportOnlyAlerts=false,reportCategory='all';
+const TEACHER=[['home','總覽面板'],['record','每日登記'],['profile','學生檔案'],['leaves','請假管理'],['calendar','抽獎日曆'],['weekly','每週結算'],['stock','獎池與領獎'],['messages','悄悄話／核對'],['reports','紀律統計中心'],['accounts','學生密碼'],['quotes','每週鼓勵語']];
+const STUDENT=[['home','我的首頁'],['record','我的紀錄'],['leaves','我的請假'],['weekly','每週抽獎'],['stock','月末特別抽獎'],['messages','悄悄話／核對'],['reports','積分與兌換']];
+function toast(msg){$('toast').textContent=msg;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),5500)}
+function rpc(op,p={}) {
+ return window.DEMO_REQUEST({op,data:p,token:authToken});
+}
+async function action(op,p={},success='已儲存'){document.body.classList.add('loading');try{const res=await rpc(op,p);if(success)toast(success);await reload();return res;}catch(e){toast('操作失敗：'+e.message);throw e;}finally{document.body.classList.remove('loading');}}
+async function reload(){data=await rpc('dashboard');render();}
+function shell(which){$('authShell').classList.toggle('hidden',which!=='auth');$('changeShell').classList.toggle('hidden',which!=='change');$('mainShell').classList.toggle('hidden',which!=='main')}
+function enter(){shell('main');$('who').textContent=me.role==='teacher'?'教師帳戶':`${studentNum(me.studentId)}號學生`;page='home';renderNav();reload().then(()=>{regDate=data.today;}).catch(e=>{toast(e.message);doLogout();});}
+async function start(){if(!authToken){shell('auth');return;}try{me=await rpc('whoami');if(me.mustChange){shell('change')}else enter();}catch(e){authToken='';sessionStorage.removeItem('bensir_token');shell('auth');}}
+async function doLogout(){if(authToken){try{await rpc('logout')}catch(e){}}authToken='';sessionStorage.removeItem('bensir_token');me=null;data=null;shell('auth');$('loginPass').value=''}
+$('loginForm').addEventListener('submit',async e=>{e.preventDefault();let btn=e.target.querySelector('button');btn.disabled=true;try{const r=await rpc('login',{username:$('loginUser').value.trim(),password:$('loginPass').value});authToken=r.token;sessionStorage.setItem('bensir_token',authToken);me=r.account;if(me.mustChange){shell('change');$('oldPass').value=$('loginPass').value;}else enter();}catch(x){toast(x.message)}finally{btn.disabled=false}});
+$('changeForm').addEventListener('submit',async e=>{e.preventDefault();try{await rpc('changePassword',{oldPassword:$('oldPass').value,newPassword:$('newPass').value});toast('密碼已更新，請用新密碼重新登入');doLogout();}catch(x){toast(x.message)}});
+$('changeExit').onclick=doLogout;$('logout').onclick=doLogout;$('refresh').onclick=()=>reload().then(()=>toast('已更新資料')).catch(e=>toast(e.message));
+function renderNav(){const arr=me.role==='teacher'?TEACHER:STUDENT;$('roleInfo').textContent=me.role==='teacher'?'教師工作區 · 29位學生':`學生專區 · ${studentNum(me.studentId)}號`;$('nav').innerHTML=arr.map(([key,title])=>`<button data-page="${key}" class="${page===key?'active':''}"><span class="nav-icon" aria-hidden="true">${({home:'⌂',record:'✎',profile:'☺',leaves:'✿',calendar:'▦',weekly:'☆',stock:'🎁',messages:'✉',reports:'▥',accounts:'⚿',quotes:'❝'})[key]||'•'}</span><span>${H(title)}</span></button>`).join('');}
+$('nav').addEventListener('click',e=>{let b=e.target.closest('[data-page]');if(b){page=b.dataset.page;renderNav();render()}});
+function section(title,body,cls=''){return `<section class="card ${cls}"><h2>${title}</h2>${body}</section>`}
+function kpi(label,num){return `<div class="kpi"><strong>${H(num)}</strong><span>${H(label)}</span></div>`}
+function empty(msg='暫無紀錄'){return `<div class="empty">${H(msg)}</div>`}
+function table(headers,body){return `<div class="tablewrap"><table><thead><tr>${headers.map(x=>`<th>${H(x)}</th>`).join('')}</tr></thead><tbody>${body||`<tr><td colspan="${headers.length}" class="empty">暫無資料</td></tr>`}</tbody></table></div>`}
+function stdOption(current){return Array.from({length:29},(_,i)=>{let id=studentNum(i+1);return `<option value="${id}" ${current===id?'selected':''}>${id}號 ${girl.has(i+1)?'♀':'♂'}</option>`}).join('')}
+function eventTypes(){return ['遲到','欠拍卡','欠交功課','上課違規記名','無故缺席','早退','缺席待確認','病假','事假','其他紀律','缺點','小過','大過'];}
+function isLeaveTypeV64(type){return type==='病假'||type==='事假';}
+function leaveBadgeV64(e){const lv=data?.leaves?.find(x=>x.id===e.id);return lv?` <span class="badge">${H(lv.approval)} · ${H(lv.proofType)}：${H(lv.proofStatus)}</span>`:'';}
+function dailyRowsV64(date){
+ const arr=data.events.filter(x=>x.date===date).map(x=>({...x,legacyLeave:false}));
+ const ids=new Set(arr.map(x=>x.id));
+ data.leaves.filter(x=>x.start<=date&&x.end>=date&&!ids.has(x.id)&&x.approval!=='已撤銷').forEach(x=>arr.push({id:x.id,date:date,studentId:x.studentId,type:x.kind,period:x.period,status:x.approval,confirmed:false,paper:false,legacyLeave:true}));
+ return arr.sort((a,b)=>a.studentId.localeCompare(b.studentId));
+}
+function leaveFieldsV64(prefix,withPeriod=true){return `<div class="leave-fields hidden" id="${prefix}LeaveFields">
+ <div class="info">✿ 每天登記一次，系統會同步至「請假管理」。病假／事假不自動計算為違規。</div>
+ ${withPeriod?`<label>缺席時段<select id="${prefix}LeavePeriod" name="leavePeriod"><option>全日</option><option>上午</option><option>下午</option><option>指定課節</option></select></label>`:''}
+ <div class="cols"><label>證明狀態<select id="${prefix}Proof" name="proofStatus"><option>待提交</option><option>已提交</option><option>已核實</option><option>免交</option></select></label><label>請假審批<select id="${prefix}Approval" name="approval"><option>待審核</option><option>已批准</option><option>不獲批准</option><option>已撤銷</option></select></label></div>
+ <label>證明提交期限（依學校規定）<input type="date" id="${prefix}Due" name="due"></label>
+ <p class="muted small">病假：醫生證明；事假：家長信。只記錄文件狀態，不上傳文件或敏感醫療資料。</p></div>`;}
+function displayEvent(r){return `<b>${H(r.type)}</b> <span class="muted">${H(r.subject||'')} ${H(r.period||'')}</span>${r.confirmed?' <span class="badge">已核實違規</span>':''}${isLeaveTypeV64(r.type)?leaveBadgeV64(r):''}`}
+function drawName(id){return ({MCD:'M記 $10 券',GRACE:'補交寬限券',GIFT:'小禮物',P3:'3積分',P5:'5積分',P7:'7積分',P10:'10積分',P15:'15積分',NONE:'下次加油'})[id]||id}
+function render(){if(!data||!me)return;const nav=me.role==='teacher'?TEACHER:STUDENT;const title=nav.find(x=>x[0]===page)?.[1]||'總覽面板';$('screenTitle').textContent=title;$('screenSub').textContent=`Bensir班 · ${data.today} · 2026–2027學年`;
+ const t=me.role==='teacher';const views=t?{home:tHome,record:tRecord,profile:tProfile,leaves:tLeaves,calendar:tCalendar,weekly:tWeekly,stock:tStock,messages:tMessages,reports:tReports,accounts:tAccounts,quotes:tQuotes}:{home:sHome,record:sRecord,leaves:sLeaves,weekly:sWeekly,stock:sStock,messages:sMessages,reports:sPoints};$('view').innerHTML=views[page]?.()||empty();bindPage()}
+// V6.3 班主任紀律數據：統計事件與正式處分分列，抽獎資格計算不改動。
+const REPORT_CATS=[
+  {id:'late',type:'遲到',name:'遲到'},
+  {id:'card',type:'欠拍卡',name:'欠拍卡'},
+  {id:'homework',type:'欠交功課',name:'欠交功課'},
+  {id:'classroom',type:'上課違規記名',name:'課堂違規'}
+];
+const REPORT_PENALTIES=['缺點','小過','大過'];
+const REPORT_OTHER=['無故缺席','早退','其他紀律'];
+const REPORT_DEFAULTS={late:3,card:3,homework:3,classroom:2};
+function reportRules_(){return {...REPORT_DEFAULTS,...(data?.reportThresholds||{})};}
+function isLiveEvent_(r){return r.status!=='已撤銷';}
+function isVerified_(r){return isLiveEvent_(r)&&r.confirmed===true;}
+function reportRows_(from,to){
+ const out=Array.from({length:29},(_,i)=>{
+   const sid=studentNum(i+1),count={},verified={},penalties={};
+   REPORT_CATS.forEach(k=>{count[k.id]=0;verified[k.id]=0;});
+   REPORT_PENALTIES.forEach(p=>penalties[p]=0);
+   return {sid,count,verified,penalties,other:0,events:0,confirmedEvents:0,pending:0,flags:[],alertScore:0};
+ });
+ const map=Object.fromEntries(out.map(x=>[x.sid,x]));
+ (data?.events||[]).forEach(e=>{
+   if(e.date<from||e.date>to||!isLiveEvent_(e))return;
+   const x=map[e.studentId];if(!x)return;
+   x.events++;
+   if(e.status==='待核實')x.pending++;
+   if(isVerified_(e))x.confirmedEvents++;
+   const cat=REPORT_CATS.find(c=>c.type===e.type);
+   if(cat){x.count[cat.id]++;if(isVerified_(e))x.verified[cat.id]++;}
+   else if(REPORT_PENALTIES.includes(e.type)){if(isVerified_(e))x.penalties[e.type]++;}
+   else if(REPORT_OTHER.includes(e.type)){x.other++;}
+ });
+ const rules=reportRules_();
+ out.forEach(x=>{
+   x.flags=REPORT_CATS.filter(c=>Number(rules[c.id])>0&&x.verified[c.id]>=Number(rules[c.id]));
+   x.alertScore=x.flags.length;
+ });
+ return out;
+}
+function reportSortRows_(rows){return rows.slice().sort((a,b)=>{
+  if(reportSort==='sid')return Number(a.sid)-Number(b.sid);
+  if(reportSort==='events')return b.events-a.events||Number(a.sid)-Number(b.sid);
+  if(reportSort==='late')return b.count.late-a.count.late||Number(a.sid)-Number(b.sid);
+  if(reportSort==='homework')return b.count.homework-a.count.homework||Number(a.sid)-Number(b.sid);
+  return b.alertScore-a.alertScore||b.confirmedEvents-a.confirmedEvents||Number(a.sid)-Number(b.sid);
+});}
+function reportPeriodLabel_(){return `${reportFrom} 至 ${reportTo}`;}
+function reportCsvDownload_(rows,name){
+ const csv='\ufeff'+rows.map(row=>row.map(value=>{
+  let s=String(value??'');if(/^[=+@\-\t\r]/.test(s))s="'"+s;
+  return '"'+s.replace(/"/g,'""')+'"';
+ }).join(',')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+ const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+function reportFlags_(r){return r.flags.length?`<span class="report-alert-pill">需關注 · ${r.flags.map(v=>H(v.name)).join('／')}</span>`:'<span class="report-normal-pill">—</span>';}
+function reportTimeline_(sid,from,to){
+ const items=data.events.filter(x=>x.studentId===sid&&x.date>=from&&x.date<=to).slice().sort((a,b)=>b.date.localeCompare(a.date));
+ return table(['日期','紀錄／科目','狀態','核實','紙本'],items.map(x=>`<tr class="${x.status==='已撤銷'?'report-void':''}"><td>${H(x.date)}</td><td><strong>${H(x.type)}</strong><span class="report-secondary">${H([x.subject,x.period].filter(Boolean).join(' · '))}</span>${x.note?`<span class="report-secondary">${H(x.note)}</span>`:''}</td><td>${H(x.status)}</td><td>${x.confirmed&&x.status!=='已撤銷'?'已核實':'—'}</td><td>${x.paper?'✓':'未核對'}</td></tr>`).join(''));
+}
+function reportTrend_(from,to){
+ const filtered=data.events.filter(x=>x.date>=from&&x.date<=to&&isVerified_(x)&&REPORT_CATS.some(t=>t.type===x.type));
+ const span=(new Date(to+'T12:00:00Z')-new Date(from+'T12:00:00Z'))/86400000;
+ const byMonth=span>62, group=x=>byMonth?x.date.slice(0,7):monday(x.date);
+ const groups={};filtered.forEach(e=>{const key=group(e);groups[key]=(groups[key]||0)+1;});
+ const keys=Object.keys(groups).sort();const max=Math.max(1,...Object.values(groups));
+ return `<div class="report-bars">${keys.length?keys.map(k=>`<div class="report-bar-line"><span>${H(k)}</span><div class="report-bar-track"><i style="width:${Math.round(groups[k]/max*100)}%"></i></div><strong>${groups[k]}</strong></div>`).join(''):empty('所選期間暫無已核實的四類主要違規事件')}</div><p class="muted small">${byMonth?'按月份':'按星期'}顯示已核實四類事件次數，不包括紀律處分的重複計數。</p>`;
+}
+function reportTeacherHome_(){
+ const todayStr=data.today,month=todayStr.slice(0,7),from=month+'-01',rows=reportRows_(from,todayStr),alerted=rows.filter(x=>x.flags.length).sort((a,b)=>b.alertScore-a.alertScore||b.confirmedEvents-a.confirmedEvents).slice(0,5);
+ return section('✦ 本月紀律關注',`<p class="muted small">${H(month)} · 預警只參考已核實事件，不會自動記缺點。</p>${alerted.length?alerted.map(x=>`<div class="report-home-item"><button class="report-student-link" data-report-student="${x.sid}">${x.sid}號</button>${reportFlags_(x)}</div>`).join(''):empty('本月尚無學生達到預警門檻')}<div class="report-home-bottom"><button class="btn primary" data-go="reports">查看全班29人統計 →</button></div>`);
+}
+function reportThresholdEditor_(){const rules=reportRules_();return `<details class="report-settings"><summary>⚙ 修改違規預警門檻（只提示，不自動處分）</summary><form id="reportThresholdForm" class="report-settings-grid">${REPORT_CATS.map(c=>`<label>${H(c.name)}<input name="${c.id}" type="number" min="0" max="30" step="1" value="${Number(rules[c.id])}" required></label>`).join('')}<div class="report-settings-foot"><span>填0代表停用該類預警。設定保存在 GAS，其他教師裝置亦會使用相同標準。</span><button class="btn primary" type="submit">儲存門檻</button></div></form></details>`;}
+
+function tHome(){const ev=data.events,lv=data.leaves,ms=data.messages;let d=data.today;return `${homeHero_('teacher')}<div class="cols three section home-kpis">${kpi('全部事件',ev.length)}${kpi('今日新增紀錄',ev.filter(x=>x.date===d).length)}${kpi('待提交證明',lv.filter(x=>x.proofStatus==='待提交').length)}</div><div class="cols section">${section('待辦事項',`<ul class="plainlist"><li>✉ 未讀悄悄話：${ms.filter(x=>x.status==='未讀').length} 封</li><li>⌛ 待核實事件：${ev.filter(x=>x.status==='待核實').length} 筆</li><li>✚ 待審批請假：${lv.filter(x=>x.approval==='待審核').length} 宗</li><li>📄 證明逾期未交：${lv.filter(x=>x.proofStatus==='待提交'&&x.due&&x.due<data.today).length} 宗</li><li>✍ 待處理核對申請：${data.appeals.filter(x=>x.status==='待處理').length} 宗</li></ul>`),section('本週工作流程',`<div class="info">每天：登記與紙本核對<br>星期五 23:59 前：核實並鎖定週次<br>星期六／日：符合資格學生自行抽獎<br>月底：上月剩餘實體獎品進行特別抽獎</div><p class="small muted">9/1–10/11 可補錄，但不影響10/12起的獎勵資格。</p>`)}</div>${reportTeacherHome_()}`}
+function doodleSvg_(){return `<svg class="hero-art" viewBox="0 0 320 205" role="img" aria-label="笑臉筆記本與校園小花插畫" xmlns="http://www.w3.org/2000/svg">
+ <circle cx="264" cy="42" r="25" fill="#FFDA8D"/><g stroke="#E7B969" stroke-width="3" stroke-linecap="round"><path d="M264 9V2M264 80v-7M231 42h-7M304 42h-8"/></g>
+ <path d="M20 168c53-38 117-21 159-7 52 17 91-10 124-19v56H20Z" fill="#B7DDCB"/>
+ <rect x="89" y="38" width="153" height="136" rx="17" fill="#FDE0AC" stroke="#A7A5B2" stroke-width="3" transform="rotate(8 160 100)"/>
+ <rect x="99" y="49" width="130" height="110" rx="8" fill="#FFFDF8" transform="rotate(8 160 100)"/>
+ <rect x="120" y="72" width="74" height="9" rx="4.5" fill="#BFE3D8" transform="rotate(8 160 100)"/>
+ <path d="M123 97h73M125 113h65M126 130h43" stroke="#E4D4C4" stroke-width="5" stroke-linecap="round" transform="rotate(8 160 100)"/>
+ <circle cx="139" cy="151" r="3" fill="#678D82"/><circle cx="155" cy="153" r="3" fill="#678D82"/><path d="M140 160q8 10 16-1" stroke="#678D82" stroke-width="3" fill="none" stroke-linecap="round"/>
+ <path d="M60 158l19-91 16 5-21 91Z" fill="#E89E8C" stroke="#AE7467" stroke-width="2"/><path d="M80 67 71 44 61 66" fill="#F6D8AE" stroke="#AE7467" stroke-width="2"/>
+ <path d="M264 168v-43" stroke="#7CAF83" stroke-width="5" stroke-linecap="round"/><path d="M265 151q-28-18-36-6q11 21 36 18M265 143q21-19 33-10q-7 19-33 20" fill="#95CBA6"/>
+ <circle cx="264" cy="115" r="13" fill="#F3BFAD"/><circle cx="249" cy="113" r="12" fill="#F3BFAD"/><circle cx="279" cy="113" r="12" fill="#F3BFAD"/><circle cx="264" cy="101" r="12" fill="#F3BFAD"/><circle cx="264" cy="128" r="12" fill="#F3BFAD"/><circle cx="264" cy="114" r="10" fill="#F8D79A"/>
+ <path d="M23 74l7-16 7 16 15 6-15 6-7 15-7-15-15-6Z" fill="#F5CE8E"/>
+ </svg>`;}
+function homeHero_(role){
+ const q=data.weeklyQuote||{title:'今天也是進步的一天！',subtitle:'一小步也值得欣賞，慢慢來，你正在前進。',weekId:''};
+ const teacher=role==='teacher';
+ return `<section class="welcome-banner section"><div class="welcome-content"><div class="welcome-kicker">✿ ${teacher?'班主任的溫暖工作台':'本週的一句鼓勵'} · ${H(q.weekId||'')}</div><h2>${H(q.title)}</h2><p>${H(q.subtitle)}</p><div class="welcome-actions">${teacher?'<button class="btn primary" data-go="record">✎ 開始今日登記</button><button class="btn cream" data-go="quotes">❝ 管理鼓勵語</button>':'<button class="btn primary" data-go="record">☁ 查看我的紀錄</button><button class="btn cream" data-go="weekly">🎁 本週幸運抽獎</button>'}</div></div>${doodleSvg_()}</section>`;
+}
+function tQuotes(){
+ let schedule=Array.isArray(data.quoteSchedule)?data.quoteSchedule:[];
+ if(!schedule.length)return section('每週鼓勵語','<div class="warn">系統尚未載入鼓勵語設定，請確認 Api.gs 及 WeeklyQuotes.gs 已更新。</div>');
+ if(!schedule.some(q=>q.weekId===quoteWeekChoice)) quoteWeekChoice=data.weeklyQuote?.weekId||schedule[0].weekId;
+ let q=schedule.find(v=>v.weekId===quoteWeekChoice)||schedule[0];
+ let opts=schedule.map(w=>`<option value="${H(w.weekId)}" ${w.weekId===q.weekId?'selected':''}>${H(w.weekId)} ${w.customized?'· 已自訂':'· 自動輪換'}</option>`).join('');
+ return `<div class="cols quote-editor section">
+ ${section('這星期想對學生說甚麼？',`<div class="info">每週一會自動換一句；你可以為指定星期預先安排自己的鼓勵語。未設定的週次會採用40句內建鼓勵語。</div><form id="quoteForm" class="stack section"><label>指定星期（星期一）<select id="quoteWeek" name="weekId">${opts}</select></label><label>主標題（最多72字）<input id="quoteTitle" name="title" maxlength="72" required value="${H(q.title)}" placeholder="例如：今天也是進步的一天！"></label><label>補充鼓勵（最多160字）<textarea name="subtitle" id="quoteSubtitle" maxlength="160" placeholder="寫一句你想對學生說的話">${H(q.subtitle)}</textarea></label><div class="button-group"><button class="btn primary" type="submit">✦ 儲存這一週的鼓勵語</button><button class="btn" type="button" id="quoteDefault">恢復自動輪換</button></div></form><p class="muted small">所有鼓勵語不會顯示學生姓名或私人紀錄。儲存後網站立即更新，不必重新部署。</p>`),
+ section('學生首頁預覽',`<div class="quote-preview"><div class="eyebrow">✷ WEEKLY MESSAGE</div><h3 id="quotePreviewTitle">${H(q.title)}</h3><p id="quotePreviewSubtitle">${H(q.subtitle)}</p><div class="quote-preview-flower">✿ ✿ ✿</div></div><div class="mini"><b>本學年已自訂 ${schedule.filter(w=>w.customized).length} 週</b><p class="muted small">其他週次由系統自動按日期切換，不用每週進入 GAS 改程式碼。</p></div>`)}</div>`;
+}
+function tRecord(){
+ const events=dailyRowsV64(regDate),linked=data.leaves;
+ return `<div class="cols section"><section class="card"><div class="section-title"><h2>日期與學生</h2><input style="max-width:180px" type="date" id="regDate" value="${H(regDate)}" min="2026-09-01" max="2027-08-31"></div>
+ <div class="buttons section"><button class="btn tiny" data-all="1">全選</button><button class="btn tiny" data-all="0">清除</button><button class="btn tiny" data-all="girls">女生</button><button class="btn tiny" data-all="boys">男生</button><span class="pill">已選${selected.size}人</span></div>
+ <div class="roster">${Array.from({length:29},(_,i)=>{let n=i+1;return `<button data-student="${studentNum(n)}" class="${girl.has(n)?'female':''} ${selected.has(studentNum(n))?'selected':''}">${studentNum(n)}</button>`}).join('')}</div>
+ <div class="info section" style="margin-top:15px">📅 每天按日期登記。若先記錄「缺席待確認」，日後可按「修改」轉為病假或事假，系統會保留原始紀錄與修改歷史。</div></section>
+ <section class="card"><h2>每日新增事件／請假</h2><form id="eventForm" class="stack">
+ <label>事件類型<select name="type" id="eventType">${eventTypes().map(x=>`<option>${x}</option>`).join('')}</select></label>
+ <div id="normalEventFields"><div class="cols"><label>科目<input name="subject" placeholder="選填"></label><label>節次<input name="period" placeholder="選填"></label></div><label>狀態<select name="status"><option>待核實</option><option>已核實</option><option>待補交</option><option>已補交</option></select></label><label>停抽期限（僅適用缺點／小過／大過）<select name="penaltyRounds"><option value="1">1星期</option><option value="2">2星期</option><option value="3">3星期</option><option value="4">1個月（4個抽獎週）</option></select></label></div>
+ ${leaveFieldsV64('new')}
+ <label>備註<textarea name="note" placeholder="請勿填入敏感醫療或家庭細節"></textarea></label>
+ <div id="normalConfirmed"><label><input name="confirmed" type="checkbox" style="width:auto"> 確認屬已核實違規</label></div>
+ <label><input name="paper" type="checkbox" style="width:auto"> 已核對紙本日誌</label>
+ <button class="btn primary">儲存所選學生紀錄</button></form></section></div>
+ ${section(`當天紀錄（${events.length}筆）`,table(['學號','事項','狀態','文件／紙本','操作'],events.map(r=>{
+ const leave=linked.find(x=>x.id===r.id);
+ return `<tr><td>${H(r.studentId)}</td><td>${displayEvent(r)}</td><td>${H(r.status)}</td><td>${leave?`${H(leave.proofType)} · ${H(leave.proofStatus)}`:r.paper?'紙本✓':'—'}</td><td><button class="btn tiny" ${r.legacyLeave?`data-leave="${H(r.id)}"`:`data-edit="${H(r.id)}"`}>${r.legacyLeave?'更新文件':'修改'}</button></td></tr>`;
+ }).join('')))}
+ <dialog class="modal" id="eventModal"><h2>修改每日紀錄</h2><form id="editEventForm" class="stack"><input type="hidden" id="editId"><div class="cols"><label>日期<input type="date" id="editDate" required></label><label>學生<select id="editStudent">${stdOption('')}</select></label></div>
+ <label>事件<select id="editType">${eventTypes().map(x=>`<option>${x}</option>`).join('')}</select></label>
+ <div id="editNormalFields"><label>狀態<select id="editStatus"><option>待核實</option><option>已核實</option><option>待補交</option><option>已補交</option><option>已撤銷</option></select></label><label>停抽週數<select id="editRounds"><option value="1">1星期</option><option value="2">2星期</option><option value="3">3星期</option><option value="4">1個月（4週）</option></select></label><label><input type="checkbox" id="editConfirmed" style="width:auto"> 已核實違規</label></div>
+ ${leaveFieldsV64('edit')}
+ <label>備註<input id="editNote"></label><label><input type="checkbox" id="editPaper" style="width:auto"> 紙本已核對</label><div class="button-group"><button class="btn primary" type="submit">儲存修正</button><button class="btn" id="closeModal" type="button">取消</button></div></form></dialog>`;
+}
+function tProfile(){
+ const sid=window.__bensirProfile||'01';
+ const all=reportRows_(reportFrom,reportTo);const rec=all.find(x=>x.sid===sid);
+ const leave=data.leaves.filter(x=>x.studentId===sid&&x.start<=reportTo&&x.end>=reportFrom);
+ const types=REPORT_CATS.map(c=>`<div class="report-small-stat"><span>${H(c.name)}</span><strong>${rec.count[c.id]}</strong><small>已核實 ${rec.verified[c.id]}</small></div>`).join('');
+ return `${section('個別學生查詢',`<div class="report-controls"><label>選擇學號<select id="profileStudent">${stdOption(sid)}</select></label><div><p class="muted small">查看日期範圍：${H(reportPeriodLabel_())}</p><button class="btn tiny" data-go="reports">返回全班統計</button></div></div><p class="muted small">資料按學號查看，保留補交、撤銷、紙本核對和原始日期。</p>`)}
+ <div class="report-stat-grid section">${types}</div>
+ ${section('紀律處分（已核實）',`<div class="report-penalty-strip">${REPORT_PENALTIES.map(p=>`<span>${p} <b>${rec.penalties[p]}</b></span>`).join('')}</div><p class="muted small">以上只計算已核實處分；事件次數和正式處分不會混合相加。</p>`)}
+ ${section('事件時間軸',reportTimeline_(sid,reportFrom,reportTo))}
+ ${section('請假紀錄',table(['期間','假別','證明狀態','審批'],leave.map(x=>`<tr><td>${H(x.start)}～${H(x.end)}</td><td>${H(x.kind)}</td><td>${H(x.proofStatus)}</td><td>${H(x.approval)}</td></tr>`).join('')))}
+ `;
+}
+function tLeaves(){return `<div class="cols section">
+${section('新增單日病假／事假',`<p class="muted small">依你的習慣每天登記一次，這裏和「每日登記」共用同一套紀錄，無須兩邊各填一次。</p>
+<form class="stack" id="leaveForm"><div class="cols"><label>學生<select name="studentId">${stdOption('01')}</select></label><label>假別<select name="kind"><option>病假</option><option>事假</option></select></label></div>
+<label>請假日期（單日）<input type="date" name="date" value="${H(data.today)}" min="2026-09-01" max="2027-08-31" required></label>
+<label>缺席時段<select name="period"><option>全日</option><option>上午</option><option>下午</option><option>指定課節</option></select></label>
+<div class="cols"><label>證明狀態<select name="proofStatus"><option>待提交</option><option>已提交</option><option>已核實</option><option>免交</option></select></label><label>審批狀態<select name="approval"><option>待審核</option><option>已批准</option><option>不獲批准</option></select></label></div>
+<label>證明提交期限<input type="date" name="due"></label><label>備註<input name="note" placeholder="不填具體病情或敏感家庭資料"></label>
+<button class="btn primary">儲存單日請假（同步每日紀錄）</button></form>`)}
+${section('待跟進文件',`<ul class="plainlist">${data.leaves.filter(x=>x.proofStatus==='待提交'&&x.approval!=='已撤銷').slice(0,20).map(x=>`<li>${H(x.studentId)}號 · ${H(x.kind)} ${H(x.start)} · ${H(x.proofType)} — ${H(x.due||'依校規期限')} <button class="btn tiny" data-leave="${H(x.id)}">更新</button></li>`).join('')||'<li>沒有待跟進文件</li>'}</ul><p class="small muted">病假追蹤醫生證明、事假追蹤家長信。只儲存提交和核實狀態。</p>`)}</div>
+${section('請假總表',table(['學號','假別','日期／時段','證明','審批','操作'],data.leaves.slice().sort((a,b)=>b.start.localeCompare(a.start)).map(x=>`<tr><td>${H(x.studentId)}</td><td>${H(x.kind)}</td><td>${H(x.start)}${x.end!==x.start?` 至 ${H(x.end)}`:''} · ${H(x.period)}</td><td>${H(x.proofType)}／${H(x.proofStatus)}</td><td>${H(x.approval)}</td><td><button class="btn tiny" data-leave="${H(x.id)}">更新</button></td></tr>`).join('')))}
+<p class="muted small">較早版本已有的多日請假資料會保留原樣；V6.4 新增紀錄只接受單日。</p>`;}
+function tCalendar(){return `${section('每週抽獎日曆',`<p class="muted">可調整尚未開始的週末；停抽週不計入處分停抽週數。已開始的抽獎不能無痕更改。</p><div class="weeklist">${table(['週末','狀態','備註','設定'],data.calendar.map(x=>`<tr><td>${H(x.saturday)}–${H(nextDate(x.saturday,1))}</td><td><span class="badge ${x.enabled?'':'paused'}">${x.enabled?'開放':'停抽'}</span></td><td>${H(x.reason)}</td><td>${x.saturday>data.today?`<button class="btn tiny" data-cal="${x.weekId}" data-enabled="${x.enabled?'0':'1'}">${x.enabled?'暫停':'開放'}</button>`:'已開始／過去'}</td></tr>`).join(''))}</div>`)}`}
+function nextDate(v,n){let x=new Date(v+'T12:00:00Z');x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10)}
+function monday(date){let d=new Date(date+'T12:00:00Z'),day=(d.getUTCDay()+6)%7;return nextDate(date,-day)}
+function tWeekly(){let weeks=data.calendar.filter(x=>x.enabled&&x.weekId<=data.today&&nextDate(x.weekId,4)<=data.today).slice(-15).reverse();return `${section('星期五核實鎖定',`<p class="muted">沒有鎖定的週次不能開放學生抽獎。若仍有待核實記錄，系統會要求說明原因。</p>${table(['統計週','抽獎週末','狀態','操作'],weeks.map(w=>`<tr><td>${w.weekId}–${nextDate(w.weekId,4)}</td><td>${w.saturday}</td><td>${w.locked?'<span class="badge">已鎖定</span>':'待結算'}</td><td>${w.locked?'—':`<button class="btn primary tiny" data-settle="${w.weekId}">核實及鎖定</button>`}</td></tr>`).join(''))}`)}`}
+function tStock(){let d=data.draws.filter(r=>['MCD','GRACE','GIFT'].includes(r.prizeId));return `<div class="cols section">${section('每月獎池庫存',`${table(['月份','獎品','上限','已抽','轉入特別庫'],data.inventory.map(x=>`<tr><td>${x.month}</td><td>${drawName(x.prizeId)}</td><td>${x.cap}</td><td>${x.awarded}</td><td>${x.transferred}</td></tr>`).join(''))}<hr><form id="transferForm" class="stack"><label>上月剩餘獎品轉特別獎勵庫<input name="month" type="month" min="2026-10" max="2027-06" required></label><button class="btn">確認轉入（不可重複轉入）</button></form>`),section('月末特別抽獎',`<p>只使用<strong>上個月</strong>未抽出的實體獎品。每月最後一天由老師確認開放；2027/6 改為6/20。</p>${table(['來源月','獎品','數量','已抽'],data.specialInventory.map(x=>`<tr><td>${x.originMonth}</td><td>${drawName(x.prizeId)}</td><td>${x.qty}</td><td>${x.awarded}</td></tr>`).join(''))}<hr><form id="specialForm" class="stack"><label>開放的月份<input name="month" type="month" min="2026-11" max="2027-06" value="${data.today.slice(0,7)}"></label><label><input style="width:auto" name="holidayOverride" type="checkbox"> 即使在長假期仍特別批准開放</label><button class="btn primary">當日開放特別抽獎</button></form><p class="small muted">未到月末不可以提前啟動。</p>`)}</div>
+${section('實體獎品領取',table(['學號','抽獎','日期','獎品','領取狀態'],d.map(x=>`<tr><td>${x.studentId}</td><td>${x.kind==='weekly'?'普通':'特別'}</td><td>${H(x.at)}</td><td>${drawName(x.prizeId)}</td><td>${x.claimedAt?'已領取 '+H(x.claimedAt):`<button class="btn tiny" data-claim="${H(x.id)}">確認領取</button>`}</td></tr>`).join('')))}`}
+function tMessages(){return `<div class="cols section">${section('學生悄悄話',`${data.messages.length?data.messages.slice().reverse().map(x=>`<div class="mini section"><div class="row"><b>${x.studentId}號 · ${H(x.category)}</b><span class="badge">${H(x.status)}</span></div><p>${H(x.text)}</p>${x.reply?`<p class="info">老師：${H(x.reply)}</p>`:''}<div class="buttons"><button class="btn tiny" data-reply="${H(x.id)}">回覆／跟進</button><span class="tag">${H(x.createdAt)}</span></div></div>`).join(''):empty()}`),section('紀錄核對申請',`${data.appeals.length?data.appeals.slice().reverse().map(x=>`<div class="mini section"><div class="row"><b>${x.studentId}號 · ${H(x.eventId.slice(0,8))}</b><span class="badge">${H(x.status)}</span></div><p>${H(x.text)}</p>${x.reply?`<p class="info">回覆：${H(x.reply)}</p>`:''}<button class="btn tiny" data-appeal="${H(x.id)}">處理申請</button></div>`).join(''):empty()}`)}</div>`}
+function tReports(){
+ if(reportFrom>reportTo)return section('日期設定錯誤','<p>開始日期不能晚於結束日期，請修改下方日期。</p><div class="report-controls"><label>由<input type="date" id="reportFrom" value="'+H(reportFrom)+'"></label><label>至<input type="date" id="reportTo" value="'+H(reportTo)+'"></label></div>');
+ const rows=reportRows_(reportFrom,reportTo), rules=reportRules_();
+ const list=data.events.filter(e=>e.date>=reportFrom&&e.date<=reportTo&&isLiveEvent_(e));
+ const alertRows=rows.filter(x=>x.flags.length), verifiedSum=rows.reduce((s,x)=>s+REPORT_CATS.reduce((a,c)=>a+x.verified[c.id],0),0);
+ const focus=reportSortRows_(rows).filter(x=>!reportOnlyAlerts||x.flags.length);
+ const cats=REPORT_CATS.map(c=>({name:c.name,key:c.id,total:rows.reduce((s,x)=>s+x.count[c.id],0),v:rows.reduce((s,x)=>s+x.verified[c.id],0)}));
+ const activeFocus=focus.filter(x=>reportCategory==='all'||x.count[reportCategory]>0);
+ const totalPending=list.filter(x=>x.status==='待核實').length;
+ const periodLeaves=data.leaves.filter(x=>x.start<=reportTo&&x.end>=reportFrom&&x.approval!=='已撤銷');
+ const monthly=periodLeaves.length, sickCount=periodLeaves.filter(x=>x.kind==='病假').length, personalCount=periodLeaves.filter(x=>x.kind==='事假').length;
+ const controls=`<div class="report-filter-top"><div><div class="eyebrow">✿ CLASS DISCIPLINE</div><h2>全班29人 · 詳細分類統計</h2><p class="muted small">選擇日期，隨時掌握班級表現、學生跟進與學期末統計。</p></div><div class="report-periods"><button class="btn tiny" data-report-preset="month">本月</button><button class="btn tiny" data-report-preset="prev">上月</button><button class="btn tiny" data-report-preset="all">全學年</button></div></div>
+ <div class="report-controls"><label>由<input type="date" id="reportFrom" value="${H(reportFrom)}" min="2026-09-01" max="2027-08-31"></label><label>至<input type="date" id="reportTo" value="${H(reportTo)}" min="2026-09-01" max="2027-08-31"></label><label>排序<select id="reportSort"><option value="alerts" ${reportSort==='alerts'?'selected':''}>預警優先</option><option value="events" ${reportSort==='events'?'selected':''}>總事件最多</option><option value="late" ${reportSort==='late'?'selected':''}>遲到最多</option><option value="homework" ${reportSort==='homework'?'selected':''}>欠功課最多</option><option value="sid" ${reportSort==='sid'?'selected':''}>按學號</option></select></label><label>分類<select id="reportCategory"><option value="all">全部分類</option>${REPORT_CATS.map(c=>`<option value="${c.id}" ${reportCategory===c.id?'selected':''}>${c.name}</option>`).join('')}</select></label></div>
+ <div class="report-filter-bottom"><label class="report-check"><input type="checkbox" id="reportOnlyAlerts" ${reportOnlyAlerts?'checked':''}> 只看達預警門檻的學生</label><div class="button-group"><button class="btn" id="reportExportSummary" type="button">下載29人分類 CSV</button><button class="btn" id="exportCsv" type="button">下載原始事件 CSV</button><button class="btn" id="backupDb" type="button">建立資料庫備份</button></div></div>`;
+ const kpis=`<div class="report-stat-grid section"><div class="report-kpi mint"><span>期間事件（未撤銷）</span><strong>${list.length}</strong></div><div class="report-kpi peach"><span>四類已核實事件</span><strong>${verifiedSum}</strong></div><div class="report-kpi cream"><span>達預警門檻學生</span><strong>${alertRows.length}<small> /29</small></strong></div><div class="report-kpi lilac"><span>待核實事件</span><strong>${totalPending}</strong></div></div>`;
+ const tr=activeFocus.map(x=>`<tr class="${x.flags.length?'report-watch-row':''}"><td><button class="report-student-link" data-report-student="${x.sid}">${x.sid}號 ›</button></td>${REPORT_CATS.map(c=>`<td class="report-num">${x.count[c.id]}${Number(rules[c.id])>0&&x.verified[c.id]>=Number(rules[c.id])?'<i title="已達預警門檻">!</i>':''}</td>`).join('')}<td class="report-num">${x.penalties['缺點']}</td><td class="report-num">${x.penalties['小過']}</td><td class="report-num">${x.penalties['大過']}</td><td class="report-num">${x.other}</td><td class="report-num">${x.pending}</td><td>${reportFlags_(x)}</td></tr>`).join('');
+ const tablePart=table(['學號',...REPORT_CATS.map(x=>x.name),'缺點','小過','大過','其他事項','待核實','預警'],tr);
+ const catCards=`<div class="report-category-grid">${cats.map((c,i)=>`<div class="report-cat r${i}"><span>${H(c.name)}</span><strong>${c.total}</strong><small>其中已核實：${c.v}</small></div>`).join('')}</div>`;
+ return `${section('📘 班級紀律統計',controls)}${kpis}
+ ${section('主要違規分類',`${catCards}<p class="muted small">事件總數包含已補交但未撤銷的原始欠交；已撤銷事件不計，預警只看已核實的事件。</p>`)}
+ ${section('本期請假記錄（不屬於違規統計）',`<div class="report-stat-grid"><div class="report-kpi mint"><span>病假記錄</span><strong>${sickCount}</strong></div><div class="report-kpi cream"><span>事假記錄</span><strong>${personalCount}</strong></div></div><p class="muted small">V6.4 新增請假以每日一筆計算；歷史多日假單以原紀錄一筆計算。核實中的請假不會自動變成違規。</p>`)}
+ ${section(`全班29人統計表（目前顯示 ${activeFocus.length} 人）`,`${tablePart}<p class="muted small">按學號可進入該學生的日期時間軸；缺點、小過及大過單獨統計，不與原事件重複當作兩次違規。${monthly?`期間共有${monthly}宗請假紀錄，請假詳情在「請假管理」。`:''}</p>`)}
+ <div class="cols section">${section('需要關注的學生',alertRows.length?reportSortRows_(alertRows).slice(0,8).map(x=>`<div class="report-home-item"><button class="report-student-link" data-report-student="${x.sid}">${x.sid}號</button>${reportFlags_(x)}</div>`).join(''):empty('這個時段沒有達到門檻的學生'))}${section('班級事件變化',reportTrend_(reportFrom,reportTo))}</div>
+ ${section('預警標準',reportThresholdEditor_())}
+ <p class="muted small">提醒只供班主任查核，不會自動記缺點、小過、大過，也不會改變原來抽獎資格計算。師生個人資料不會在學生端顯示全班統計。</p>`;
+}
+function tAccounts(){return `${section('學生登入帳戶 · 29人',`<div class="warn">首次發放密碼請私下交給本人，勿貼在班級群組。老師重設密碼後，舊密碼失效，學生再次登入必須修改。</div><div class="space"></div><div class="roster">${Array.from({length:29},(_,i)=>`<button data-reset="${studentNum(i+1)}" class="${girl.has(i+1)?'female':''}">${studentNum(i+1)}<br><span class="small">重設</span></button>`).join('')}</div><p class="muted small">教師帳號由首次初始化建立。建議先更改管理員初始密碼後，再逐位發放學生密碼。</p>`)}`}
+function sHome(){let e=data.events.filter(x=>x.status!=='已撤銷'),lv=data.leaves;return `${homeHero_('student')}<div class="cols three section home-kpis">${kpi('我的積分',data.points)}${kpi('額外抽獎券',data.tickets)}${kpi('待補交功課',e.filter(x=>x.type==='欠交功課'&&x.status==='待補交').length)}</div><div class="cols section">${section('本週抽獎資格',`<div class="${data.weekly.eligibility.eligible?'info':'warn'}"><b>${H(data.weekly.eligibility.reason)}</b></div><p>本週：${data.weekly.weekId} – ${nextDate(data.weekly.weekId,4)}</p><p class="muted small">學生獎勵於2026/10/12起實行。核實違規和有效處分才會影響抽獎資格。</p>`),section('給學生的小提醒',`<div class="info">可查看自己的功課、請假及出勤；發現記錄有誤可以提出核對。悄悄話不是緊急求助渠道，若遇安全問題請即時聯絡可信任的老師或學校。</div>` )}</div>`}
+function sRecord(){return `${section('我的事件記錄',table(['日期','事項','狀態','核對'],data.events.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${displayEvent(x)}</td><td>${H(x.status)}</td><td><button class="btn tiny" data-question="${H(x.id)}">申請核對</button></td></tr>`).join('')))}${section('我的核對申請',data.appeals.length?data.appeals.map(x=>`<div class="mini">${H(x.text)} · ${H(x.status)}${x.reply?`<p>老師：${H(x.reply)}</p>`:''}</div>`).join(''):empty())}`}
+function sLeaves(){return `${section('我的請假與補交證明',table(['期間','假別','需要證明','提交狀態','審批'],data.leaves.map(x=>`<tr><td>${x.start}～${x.end}</td><td>${H(x.kind)}</td><td>${H(x.proofType)}${x.due?`（限期${H(x.due)}）`:''}</td><td>${H(x.proofStatus)}</td><td>${H(x.approval)}</td></tr>`).join('')))}<p class="muted small">如已交文件但狀態未更新，可到「悄悄話」通知老師。</p>`}
+function sWeekly(){let x=data.weekly,allowed=x.eligibility.eligible&&x.active,count=data.draws.filter(d=>d.kind==='weekly'&&d.periodKey===x.weekId).length;return `${section('每週幸運抽獎',`<div class="grid3 section">${kpi('已抽次數',`${count}/2`)}${kpi('可用額外券',data.tickets)}${kpi('積分',data.points)}</div><div class="${allowed?'info':'warn'}">${H(allowed?'符合本週抽獎資格':x.eligibility.reason)}｜抽獎週末：${x.saturday}–${nextDate(x.saturday,1)}</div><div class="space"></div><div class="buttons"><button class="btn primary" data-draw="weekly" data-extra="0" ${!allowed||count!==0?'disabled':''}>免費抽一次</button><button class="btn" data-draw="weekly" data-extra="1" ${!allowed||count!==1||data.tickets<1?'disabled':''}>使用額外券再抽一次</button></div><p class="muted small">普通獎池：M記券、寬限券、小禮物、3／5／7／10／15積分、下次加油。每人每週最多2次。</p>`)}${drawHistory_('weekly')}`}
+function sStock(){let x=data.special,allowed=x.eligibility.eligible&&x.active,count=data.draws.filter(d=>d.kind==='special'&&d.periodKey===x.month).length;return `${section('每月特別幸運抽獎',`<p>只於每月最後一日開放，合資格條件：當月沒有已核實違規，且沒有仍生效的停抽處分。</p><div class="grid3 section">${kpi('本月已抽',`${count}/2`)}${kpi('額外券餘額',data.tickets)}${kpi('活動日期',x.date)}</div><div class="${allowed?'info':'warn'}">${H(x.eligibility.reason)}</div><div class="space"></div><div class="buttons"><button class="btn primary" data-draw="special" data-extra="0" ${!allowed||count!==0?'disabled':''}>免費特別抽獎</button><button class="btn" data-draw="special" data-extra="1" ${!allowed||count!==1||data.tickets<1?'disabled':''}>使用額外券再抽</button></div><p class="muted small">特別獎池只包含上月剩餘實體獎品，或者「下次加油」，不會抽出積分。</p>`)}${drawHistory_('special')}`}
+function drawHistory_(kind){return section('我的抽獎紀錄',data.draws.filter(x=>x.kind===kind).length?table(['週次／月份','結果','日期'],data.draws.filter(x=>x.kind===kind).slice().reverse().map(x=>`<tr><td>${H(x.periodKey)}</td><td>${drawName(x.prizeId)}</td><td>${H(x.at)}</td></tr>`).join('')):empty())}
+function sMessages(){return `<div class="cols section">${section('給班主任的悄悄話',`<div class="warn small">這不是緊急求助渠道。如遇即時安全問題，請直接找在場老師或校方人員。</div><div class="space"></div><form class="stack" id="messageForm"><label>分類<select name="category"><option>紀錄核對</option><option>功課問題</option><option>請假問題</option><option>想約談話</option><option>班級建議</option><option>其他</option></select></label><label>留言<textarea name="text" maxlength="800" required placeholder="只有本人及授權老師可查看"></textarea></label><button class="btn primary">傳送訊息</button></form>`),section('我的留言與老師回覆',data.messages.length?data.messages.slice().reverse().map(x=>`<div class="mini section"><div class="row"><b>${H(x.category)}</b><span class="badge">${H(x.status)}</span></div><p>${H(x.text)}</p>${x.reply?`<p class="info">老師：${H(x.reply)}</p>`:''}</div>`).join(''):empty())}</div>`}
+function sPoints(){return `${section('積分兌換',`<div class="grid3 section">${kpi('可用積分',data.points)}${kpi('額外抽獎券',data.tickets)}${kpi('兌換比例','50分／券')}</div><p>普通／特別抽獎共用同一種額外券。抽獎券使用後會扣除，每次活動最多用1張。</p><button class="btn primary" id="redeemBtn" ${data.points<50||data.today>data.end||data.today<data.start?'disabled':''}>扣除50分 · 兌換1張額外券</button><p class="small muted">未用完的積分和抽獎券不會因違規自動沒收，但2027年6月20日活動結束後不能繼續使用。</p>`)}${section('我的積分流水帳',table(['日期','項目','積分變動'],data.pointsLedger.slice().reverse().map(x=>`<tr><td>${H(x.at)}</td><td>${H(x.kind)}</td><td><b>${x.delta>0?'+':''}${x.delta}</b></td></tr>`).join('')))}${section('抽獎券記錄',table(['取得日期','使用日期'],data.ticketLedger.slice().reverse().map(x=>`<tr><td>${H(x.earnedAt)}</td><td>${H(x.spentAt||'尚未使用')}</td></tr>`).join('')))}`}
+function formData(form){let fd=new FormData(form),o={};for(let [k,v] of fd.entries())o[k]=v;return o}
+// 老師重設密碼後：一次性顯示並提供複製按鈕，不儲存密碼到瀏覽器。
+function showResetPassword_(studentId, temporaryPassword) {
+ const dialog=document.createElement('dialog');
+ dialog.setAttribute('aria-label',`${studentId}號學生的一次性密碼`);
+ dialog.style.cssText='border:0;border-radius:22px;padding:26px;width:min(440px,calc(100vw - 32px));max-height:90vh;box-shadow:0 20px 65px rgba(25,52,48,.25);font-family:inherit;color:#26504c;background:#fff';
+ dialog.innerHTML=`<div style="display:grid;gap:16px">
+  <div><h2 style="margin:0 0 8px;font-size:21px">${H(studentId)}號學生 · 一次性密碼</h2>
+  <p style="margin:0;color:#677c78;line-height:1.65;font-size:13px">這組密碼只在本次重設後顯示，請私下交給學生，首次登入後必須更改。</p></div>
+  <label style="display:grid;gap:8px;font-size:13px;font-weight:700">臨時密碼
+   <input data-reset-secret type="text" readonly autocomplete="off" autocapitalize="off" spellcheck="false" value="${H(temporaryPassword)}" style="width:100%;box-sizing:border-box;padding:13px;border:1px solid #b5d2cc;border-radius:10px;background:#f2f9f7;color:#153f38;font-size:16px;font-family:ui-monospace,Consolas,monospace"></label>
+  <div data-copy-status role="status" aria-live="polite" style="color:#386f64;font-size:12px;min-height:1.4em">密碼不會自動保存為檔案。</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+   <button data-reset-copy type="button" style="flex:1;min-width:125px;cursor:pointer;background:#348f7d;color:white;border:0;border-radius:10px;padding:12px;font-weight:700">📋 複製密碼</button>
+   <button data-reset-close type="button" style="flex:1;min-width:105px;cursor:pointer;background:#e8f3ef;color:#26554b;border:0;border-radius:10px;padding:12px;font-weight:700">完成／關閉</button>
+  </div>
+ </div>`;
+ document.body.appendChild(dialog);
+ const secret=dialog.querySelector('[data-reset-secret]');
+ const status=dialog.querySelector('[data-copy-status]');
+ dialog.querySelector('[data-reset-copy]').addEventListener('click',async()=>{
+   let copied=false;
+   // GAS 在 iframe 中執行，Clipboard API 可能受瀏覽器權限限制，故設選取複製備援。
+   if(navigator.clipboard && typeof navigator.clipboard.writeText==='function'){
+     try {await navigator.clipboard.writeText(secret.value);copied=true;}catch(e){}
+   }
+   if(!copied){
+     secret.focus();secret.select();
+     try{copied=!!document.execCommand('copy')}catch(e){}
+   }
+   status.textContent=copied?'✅ 已複製！請只私下交給該學生。':'瀏覽器限制自動複製：密碼已選取，請按 Ctrl+C（Mac：⌘C）。';
+ });
+ dialog.querySelector('[data-reset-close]').addEventListener('click',()=>dialog.close());
+ dialog.addEventListener('close',()=>{secret.value='';dialog.remove();});
+ if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');
+}
+
+// V6.2 神秘禮物盒：中獎結果一律由既有 GAS draw API 決定；前端不選獎、不修改權重或庫存。
+let giftDrawInFlight_=false;
+const giftSleep_=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function giftArt_(){return `<div class="gift-art" aria-hidden="true">
+  <div class="gift-rays"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="gift-lid"><span class="gift-lid-ribbon"></span><span class="gift-bow bow-left"></span><span class="gift-bow bow-right"></span><span class="gift-bow-center"></span></div>
+  <div class="gift-box"><span class="gift-ribbon"></span><span class="gift-glow"></span></div>
+  <div class="gift-sparkles">${Array.from({length:12},(_,i)=>`<span class="gift-confetti" style="--dx:${Math.round(Math.cos(i*Math.PI/6)*(95+(i%3)*23))}px;--dy:${Math.round(Math.sin(i*Math.PI/6)*(95+(i%3)*23))}px;--delay:${(i%4)*45}ms"></span>`).join('')}</div>
+</div>`;}
+function giftIntro_(kind,extra){const special=kind==='special';return `<div class="gift-kicker">✦ BENSIR CLASS · 幸運禮物時刻</div><h2 id="giftTitle">${special?'每月特別驚喜':'本週幸運禮物'}</h2><p id="giftDesc" class="gift-subtitle">${extra?'將使用1張50積分兌換的額外券':'使用本次免費抽獎機會'}，準備拆開禮物盒吧！</p>`;}
+function giftResultMessage_(r){const id=String(r?.prizeId||'NONE');
+ if(id==='NONE')return {title:'下次加油！',body:'每一次努力都值得肯定，下次還有新的驚喜。',skin:'encourage'};
+ if(id==='MCD')return {title:'哇！抽中 M記 $10 券！',body:'請稍後向班主任領取實體獎品。',skin:'grand'};
+ if(id==='GRACE')return {title:'恭喜！補交寬限券！',body:'使用前請依照班主任及科任老師的規定確認。',skin:'grand'};
+ if(id==='GIFT')return {title:'恭喜！抽中實體小禮物！',body:'獎品需由班主任核對後領取。',skin:'grand'};
+ return {title:`恭喜！獲得${Number(r?.pointsAdded)||0}積分！`,body:`新的積分餘額：${Number(r?.points)||0}分。繼續累積，50分可兌換額外抽獎券。`,skin:'points'};
+}
+function giftDialog_(){const dialog=document.createElement('dialog');dialog.className='gift-dialog';dialog.setAttribute('aria-labelledby','giftTitle');
+ dialog.innerHTML=`<div class="gift-stage"><button class="gift-dismiss" type="button" data-gift-close aria-label="取消抽獎">×</button><div id="giftHeader"></div><div class="gift-art-wrap" id="giftArtWrap">${giftArt_()}</div><div id="giftStatus" class="gift-status" role="status" aria-live="polite">禮物盒已準備好 ✨</div><div class="gift-result hidden" id="giftResult"></div><div class="gift-controls"><button class="btn primary gift-primary" type="button" id="giftTrigger">🎁 打開禮物盒！</button><button class="btn gift-finish hidden" type="button" id="giftFinish">完成・查看抽獎紀錄</button></div><p class="gift-footnote">中獎結果由 GAS 伺服器決定並保存，動畫不會改變機率。</p></div>`;
+ document.body.appendChild(dialog);return dialog;}
+function openGiftDraw_(btn){if(giftDrawInFlight_||document.querySelector('dialog.gift-dialog'))return;
+ const kind=btn.dataset.draw, extra=btn.dataset.extra==='1';
+ if(!['weekly','special'].includes(kind))return;
+ const dialog=giftDialog_(),trigger=dialog.querySelector('#giftTrigger'),finish=dialog.querySelector('#giftFinish'),stage=dialog.querySelector('.gift-stage'),status=dialog.querySelector('#giftStatus'),resBox=dialog.querySelector('#giftResult'),close=dialog.querySelector('[data-gift-close]');
+ dialog.querySelector('#giftHeader').innerHTML=giftIntro_(kind,extra);
+ let sent=false,needsReload=false;
+ const dispose=()=>{dialog.remove();if(needsReload){reload().catch(e=>toast('更新抽獎紀錄失敗：'+e.message));}};
+ dialog.addEventListener('close',dispose,{once:true});
+ dialog.addEventListener('cancel',e=>{if(giftDrawInFlight_)e.preventDefault();});
+ close.addEventListener('click',()=>{if(!giftDrawInFlight_)dialog.close();});
+ finish.addEventListener('click',()=>{if(!giftDrawInFlight_)dialog.close();});
+ if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');
+ trigger.addEventListener('click',async()=>{
+  if(sent||giftDrawInFlight_)return;
+  sent=true;giftDrawInFlight_=true;trigger.disabled=true;close.disabled=true;
+  stage.classList.add('gift-opening');status.textContent='正在準備你的驚喜，請不要關閉畫面…';
+  try{
+   // 僅調用一次既有的 draw API，避免動畫發生網絡重試而重覆抽獎。
+   const [r]=await Promise.all([rpc('draw',{kind,extra}),giftSleep_(1150)]);
+   needsReload=true;
+   const message=giftResultMessage_(r);
+   stage.classList.add('gift-revealing');stage.classList.add('gift-'+message.skin);
+   await giftSleep_(900);
+   dialog.querySelector('#giftTitle').textContent=message.title;
+   dialog.querySelector('#giftDesc').textContent=message.body;
+   resBox.innerHTML=`<span class="gift-result-label">✦ 抽獎結果</span><strong>${H(r.label||drawName(r.prizeId))}</strong>${r.pointsAdded?`<span>+${Number(r.pointsAdded)}積分</span>`:''}`;
+   resBox.classList.remove('hidden');status.textContent=message.skin==='encourage'?'下次繼續加油 🌱':'已將獎品存入你的抽獎紀錄 ✨';
+  }catch(e){
+   needsReload=true;
+   stage.classList.add('gift-failed');
+   dialog.querySelector('#giftTitle').textContent='暫時無法確認抽獎結果';
+   dialog.querySelector('#giftDesc').textContent='如果網絡剛好中斷，抽獎可能已記錄，請先查看「我的抽獎紀錄」，不要立即再抽。';
+   status.textContent='系統訊息：'+(e?.message||'連線異常');
+  }finally{
+   giftDrawInFlight_=false;close.disabled=false;close.setAttribute('aria-label','關閉並更新紀錄');
+   trigger.classList.add('hidden');finish.classList.remove('hidden');
+  }
+ });
+}
+
+function toggleLeaveV64_(type,which){
+ const leave=isLeaveTypeV64(type),fields=$(which==='new'?'newLeaveFields':'editLeaveFields');
+ const normal=$(which==='new'?'normalEventFields':'editNormalFields');
+ if(fields)fields.classList.toggle('hidden',!leave);
+ if(normal)normal.classList.toggle('hidden',leave);
+ if(which==='new')$('normalConfirmed')?.classList.toggle('hidden',leave);
+}
+function bindPage(){const v=$('view');
+ v.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{page=b.dataset.go;renderNav();render();});
+ $('quoteWeek')?.addEventListener('change',e=>{quoteWeekChoice=e.target.value;render()});
+ $('quoteTitle')?.addEventListener('input',e=>{if($('quotePreviewTitle'))$('quotePreviewTitle').textContent=e.target.value||'本週鼓勵語';});
+ $('quoteSubtitle')?.addEventListener('input',e=>{if($('quotePreviewSubtitle'))$('quotePreviewSubtitle').textContent=e.target.value;});
+ $('quoteForm')?.addEventListener('submit',async e=>{e.preventDefault();try{await action('saveWeeklyQuote',formData(e.target),'本週鼓勵語已更新');}catch(x){}});
+ $('quoteDefault')?.addEventListener('click',async()=>{if(!confirm('將此週的鼓勵語恢復成系統自動輪換內容？'))return;try{await action('saveWeeklyQuote',{weekId:quoteWeekChoice,title:'恢復預設',subtitle:'',reset:true},'已恢復此週自動輪換');}catch(x){}});$('profileStudent')?.addEventListener('change',e=>{window.__bensirProfile=e.target.value;render()});v.querySelectorAll('[data-student]').forEach(b=>b.onclick=()=>{let x=b.dataset.student;selected.has(x)?selected.delete(x):selected.add(x);render()});v.querySelectorAll('[data-all]').forEach(b=>b.onclick=()=>{let a=b.dataset.all;selected=new Set(Array.from({length:29},(_,i)=>studentNum(i+1)).filter(s=>a==='1'||a==='girls'&&girl.has(+s)||a==='boys'&&!girl.has(+s)));render()});
+ $('regDate')?.addEventListener('change',e=>{regDate=e.target.value;render()});
+ $('eventType')?.addEventListener('change',e=>toggleLeaveV64_(e.target.value,'new'));
+ $('editType')?.addEventListener('change',e=>toggleLeaveV64_(e.target.value,'edit'));
+ $('eventForm')?.addEventListener('submit',async e=>{e.preventDefault();if(!selected.size){toast('請先勾選至少一位學生');return;}let p=formData(e.target);p.date=regDate;p.studentIds=[...selected];p.confirmed=e.target.confirmed.checked;p.paper=e.target.paper.checked;try{await action('saveEvents',p,`已登記 ${selected.size} 位學生`);selected.clear();render()}catch(x){}});
+ v.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{let r=data.events.find(x=>x.id===b.dataset.edit);if(!r)return;$('editId').value=r.id;$('editDate').value=r.date;$('editStudent').value=r.studentId;$('editType').value=r.type;$('editStatus').value=r.status;$('editRounds').value=String(r.penaltyRounds||1);$('editNote').value=r.note||'';$('editConfirmed').checked=r.confirmed;$('editPaper').checked=r.paper;let lv=data.leaves.find(x=>x.id===r.id);$('editLeavePeriod').value=lv?.period||'全日';$('editProof').value=lv?.proofStatus||'待提交';$('editApproval').value=lv?.approval||'待審核';$('editDue').value=lv?.due||'';toggleLeaveV64_(r.type,'edit');$('eventModal').showModal()});
+ $('closeModal')?.addEventListener('click',()=> $('eventModal').close());
+ $('editEventForm')?.addEventListener('submit',async e=>{e.preventDefault();let p={id:$('editId').value,date:$('editDate').value,studentId:$('editStudent').value,type:$('editType').value,status:$('editStatus').value,penaltyRounds:Number($('editRounds').value),note:$('editNote').value,confirmed:$('editConfirmed').checked,paper:$('editPaper').checked,leavePeriod:$('editLeavePeriod').value,proofStatus:$('editProof').value,approval:$('editApproval').value,due:$('editDue').value};try{await action('updateEvent',p);$('eventModal')?.close()}catch(x){}});
+ $('leaveForm')?.addEventListener('submit',async e=>{e.preventDefault();try{await action('saveLeave',formData(e.target),'已登記請假')}catch(x){}});
+ v.querySelectorAll('[data-leave]').forEach(b=>b.onclick=async()=>{let r=data.leaves.find(x=>x.id===b.dataset.leave);let proof=prompt('證明狀態：待提交／已提交／已核實／免交',r.proofStatus);if(proof===null)return;let approval=prompt('審批：待審核／已批准／不獲批准／已撤銷',r.approval);if(approval===null)return;try{await action('updateLeave',{id:r.id,proofStatus:proof,approval})}catch(x){}});
+ v.querySelectorAll('[data-cal]').forEach(b=>b.onclick=async()=>{let reason=prompt('調整抽獎日曆的原因',b.dataset.enabled==='0'?'假期／考試週':'恢復正常抽獎');if(reason===null)return;try{await action('setCalendar',{weekId:b.dataset.cal,enabled:b.dataset.enabled==='1',reason})}catch(x){}});
+ v.querySelectorAll('[data-settle]').forEach(b=>b.onclick=async()=>{if(!confirm(`確認已核實本週資料並鎖定：${b.dataset.settle}？`))return;let week=b.dataset.settle;let pending=data.events.filter(e=>e.date>=week&&e.date<=nextDate(week,4)&&e.status==='待核實');if(pending.length&&!confirm(`本週仍有${pending.length}筆待核實事件。是否仍要例外鎖定？此決定會記錄在操作歷史。`))return;let note=prompt('請填寫本週核實備註'+(pending.length?'及例外鎖定原因':''),'已核對紙本日誌');if(note===null)return;try{await action('settleWeek',{weekId:week,note,overridePending:pending.length>0},'已鎖定本週紀錄')}catch(x){}});
+ $('transferForm')?.addEventListener('submit',async e=>{e.preventDefault();try{await action('transferLeftovers',formData(e.target),'剩餘實體獎已轉入特別庫')}catch(x){}});
+ $('specialForm')?.addEventListener('submit',async e=>{e.preventDefault();let x=formData(e.target);x.holidayOverride=!!e.target.holidayOverride.checked;try{await action('openSpecial',x,'特別抽獎已開放')}catch(x){}});
+ v.querySelectorAll('[data-claim]').forEach(b=>b.onclick=async()=>{if(!confirm('確認已把實體獎品交給學生？此操作不可重複。'))return;try{await action('claimPrize',{id:b.dataset.claim},'已確認領獎')}catch(x){}});
+ v.querySelectorAll('[data-reply]').forEach(b=>b.onclick=async()=>{let msg=data.messages.find(x=>x.id===b.dataset.reply);let text=prompt('輸入老師回覆（留空可改為待跟進）',msg.reply||'');if(text===null)return;let status=text?'已回覆':'待跟進';try{await action('replyMessage',{id:msg.id,reply:text,status},'已更新留言')}catch(x){}});
+ v.querySelectorAll('[data-appeal]').forEach(b=>b.onclick=async()=>{let x=data.appeals.find(a=>a.id===b.dataset.appeal);let reply=prompt('核對結果／處理回覆',x.reply||'');if(reply===null)return;try{await action('replyAppeal',{id:x.id,reply,status:'已完成'},'已回覆核對申請')}catch(e){}});
+ v.querySelectorAll('[data-reset]').forEach(b=>b.onclick=async()=>{if(!confirm(`重設 ${b.dataset.reset}號學生的密碼？舊密碼將失效。`))return;try{let r=await action('resetStudentPassword',{studentId:b.dataset.reset},null);showResetPassword_(r.studentId,r.temporaryPassword);}catch(x){}});
+ v.querySelectorAll('[data-report-student]').forEach(b=>b.onclick=()=>{window.__bensirProfile=b.dataset.reportStudent;page='profile';renderNav();render();window.scrollTo(0,0);});
+ v.querySelectorAll('[data-report-preset]').forEach(b=>b.onclick=()=>{
+  const key=b.dataset.reportPreset,now=data.today;
+  if(key==='all'){reportFrom='2026-09-01';reportTo='2027-08-31';}
+  if(key==='month'){reportFrom=now.slice(0,7)+'-01';reportTo=now;}
+  if(key==='prev'){const d=new Date(now.slice(0,7)+'-01T12:00:00Z');d.setUTCDate(0);reportTo=d.toISOString().slice(0,10);reportFrom=reportTo.slice(0,7)+'-01';}
+  render();
+ });
+ $('reportSort')?.addEventListener('change',e=>{reportSort=e.target.value;render()});
+ $('reportCategory')?.addEventListener('change',e=>{reportCategory=e.target.value;render()});
+ $('reportOnlyAlerts')?.addEventListener('change',e=>{reportOnlyAlerts=e.target.checked;render()});
+ $('reportThresholdForm')?.addEventListener('submit',async e=>{
+  e.preventDefault();const form=e.target,values={};REPORT_CATS.forEach(c=>values[c.id]=Number(form.elements[c.id].value));
+  try{await action('saveReportThresholds',values,'預警門檻已儲存')}catch(x){}
+ });
+ $('reportExportSummary')?.addEventListener('click',()=>{
+  const rows=reportRows_(reportFrom,reportTo),sorted=reportSortRows_(rows);
+  const out=[['日期起','日期迄','學號','遲到','欠拍卡','欠交功課','上課違規記名','缺點','小過','大過','其他事項','待核實數','已核實四類事件合計','預警分類'],...sorted.map(x=>[
+   reportFrom,reportTo,x.sid,x.count.late,x.count.card,x.count.homework,x.count.classroom,x.penalties['缺點'],x.penalties['小過'],x.penalties['大過'],x.other,x.pending,REPORT_CATS.reduce((s,c)=>s+x.verified[c.id],0),x.flags.map(c=>c.name).join('／')
+  ])];reportCsvDownload_(out,`Bensir班_29人分類統計_${reportFrom}_${reportTo}.csv`);
+ });
+ $('reportFrom')?.addEventListener('change',e=>{reportFrom=e.target.value;render()});$('reportTo')?.addEventListener('change',e=>{reportTo=e.target.value;render()});
+ $('backupDb')?.addEventListener('click',async()=>{if(!confirm('建立一份包含所有紀錄的 Google Sheets 資料庫備份？'))return;try{let r=await action('backupDatabase',{},'備份已建立');alert('備份檔：'+r.name+'\n'+r.url)}catch(e){}});
+ $('exportCsv')?.addEventListener('click',()=>{let rows=data.events.filter(x=>x.date>=reportFrom&&x.date<=reportTo);let lines=[['日期','學號','事件','狀態','已核實違規','紙本已核對','科目','節次','備註'],...rows.map(x=>[x.date,x.studentId,x.type,x.status,x.confirmed?'是':'否',x.paper?'是':'否',x.subject,x.period,x.note])];let out='\ufeff'+lines.map(row=>row.map(s=>{let v=String(s??'');if(/^[=+@\-]/.test(v))v="'"+v;return '"'+v.replaceAll('"','""')+'"';}).join(',')).join('\r\n');let blob=new Blob([out],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Bensir班_事件統計.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)});
+ v.querySelectorAll('[data-question]').forEach(b=>b.onclick=async()=>{let reason=prompt('請寫明需要老師核對的原因');if(!reason)return;try{await action('appeal',{eventId:b.dataset.question,text:reason},'已提交核對申請')}catch(x){}});
+ $('messageForm')?.addEventListener('submit',async e=>{e.preventDefault();try{await action('saveMessage',formData(e.target),'悄悄話已送出')}catch(x){}});
+ v.querySelectorAll('[data-draw]').forEach(b=>b.onclick=()=>openGiftDraw_(b));
+ $('redeemBtn')?.addEventListener('click',async()=>{if(!confirm('用50積分換1張共用額外抽獎券？'))return;try{await action('redeem',{},'已兌換1張額外抽獎券')}catch(x){}});
+}
+function activateGuest_(role){
+ demoUser={username:role==='teacher'?'teacher':'09',role,studentId:role==='teacher'?'':'09',mustChange:false};
+ me=clone(demoUser);authToken='fictional-demo';sessionStorage.setItem('bensir_token',authToken);
+ enter();
+}
+$('demoTeacherLogin')?.addEventListener('click',()=>activateGuest_('teacher'));
+$('demoStudentLogin')?.addEventListener('click',()=>activateGuest_('student'));
+$('demoSwapTeacher')?.addEventListener('click',()=>activateGuest_('teacher'));
+$('demoSwapStudent')?.addEventListener('click',()=>activateGuest_('student'));
+$('demoReturn')?.addEventListener('click',()=>{doLogout();});
+/* 每次重新開啟參觀頁均從入口開始，不記住任何訪客登入。 */
+sessionStorage.removeItem('bensir_token');authToken='';
+start();
+})();
+</script>
+</body></html>
